@@ -810,7 +810,7 @@ Enables support of regex options. (i,m,x,W,S,D,P,y)
   - `P` - ASCII only POSIX properties. (includes W,D,S)
 
 
-### 31. ONIG_SYN_OP2_QMARK_CAPITAL_P_NAME
+### 31. ONIG_SYN_OP2_QMARK_CAPITAL_P_NAME (enable `(?P<name>...)` and `(?P=name)`)
 
 _Set in: Python_
 
@@ -930,19 +930,19 @@ _Set in: Oniguruma, Java_
 
 If this flag is set, then a variable length expressions are allowed in look-behind.
 
-### 12. ONIG_SYN_PYTHON
+### 12. ONIG_SYN_PYTHON (enable `\UHHHHHHHH` for Unicode)
 
 _Set in: Python_
 
 
 
-### 13. ONIG_SYN_WHOLE_OPTIONS
+### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CLI)`)
 
 _Set in: Oniguruma_
 
 
 
-### 14. ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP
+### 14. ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP (enable `\(^abc$\)`)
 
 _Set in: Grep, PosixBasic_
 
@@ -998,13 +998,13 @@ _Set in: Oniguruma, Ruby_
 If this flag is set, Oniguruma will warn about nested repeat operators those have no meaning, like `(?:a*)+`.
 If this flag is clear, Oniguruma will allow the nested repeat operators without warning about them.
 
-### 26. ONIG_SYN_ALLOW_INVALID_CODE_END_OF_RANGE_IN_CC (allow [a-\x{7fffffff}])
+### 26. ONIG_SYN_ALLOW_INVALID_CODE_END_OF_RANGE_IN_CC (allow `[a-\x{7fffffff}]`)
 
 _Set in: Oniguruma_
 
 If this flag is set, then invalid code points at the end of range in character class are allowed.
 
-### 27. ONIG_SYN_ALLOW_CHAR_TYPE_FOLLOWED_BY_MINUS_IN_CC
+### 27. ONIG_SYN_ALLOW_CHAR_TYPE_FOLLOWED_BY_MINUS_IN_CC (allow `[\w-%]` to mean `[\w\-%]`) 
 
 _Set in: Perl_NG, Perl, Java_
 
