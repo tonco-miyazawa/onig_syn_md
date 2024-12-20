@@ -1,4 +1,4 @@
-﻿/*
+/*
  * onig_syn_md.c
  * Copyright (c) 2024  K.Kosako
  *
@@ -12,7 +12,7 @@
 #include <string.h>
 #include "oniguruma.h"
 
-#define ONIG_SYN_MD_VERSION_INT           (00001)
+#define ONIG_SYN_MD_VERSION_INT           (00002)
 #define TOTAL_NUM_OF_BITS                 (32)
 
 #define PRINT_SEPARATOR                   (printf("===================================================\n"))
@@ -28,7 +28,6 @@
 2: (OP2)
 3: (BEHAVIOR) */
 #define NOW_MODE                          (1)
-
 
 /*  #define PRINT_UNDEFINED_FLAG  */
 
@@ -135,14 +134,17 @@ static void print_syn_data_list()
 {
   int y;
   PRINT_SEPARATOR;
-  for (y=0; y < num_of_syntax_types; y++ )
+  for (y = 0; y < num_of_syntax_types; y++)
   {
     printf( "\nsyn_data_list[%d]\n", y);
     printf( "name='%s'\n"   , syn_data_list[y].name);
-    printf( "abb='%s'\n"    , syn_data_list[y].abb);
+
     printf( "syn->");
     printf( SYNTAX_MEMBER_NAME );
-    printf( "=0x%x\n", SYNTAX_MEMBER(syn_data_list[y].syn) );
+    printf( "= 0x%08x\n", SYNTAX_MEMBER(syn_data_list[y].syn) );
+
+    printf( "abb='%s'\n"    , syn_data_list[y].abb);
+    printf( "set_in='%s'\n"    , syn_data_list[y].set_in);        
   };
   return ;
 }
@@ -288,7 +290,7 @@ static int flag_name_max_len_int()
   int i, n, max_len;
   max_len = 0;
 
-  for (i=0; i < num_of_flags; i++)
+  for (i = 0; i < num_of_flags; i++)
   {
     n = strlen(flag_data_list[i].name);
     if ( max_len < n )
@@ -305,9 +307,9 @@ static int flag_name_max_len_int()
 static int convert_bit_shift_num_to_flag_data_list_element( int bit_shift_num )
 {
   int i;
-  for ( i=0; i < num_of_flags; i++ )
+  for (i = 0; i < num_of_flags; i++)
   {
-    if ( flag_data_list[i].num == ( 1U << bit_shift_num) ){
+    if ( flag_data_list[i].num == (1U << bit_shift_num) ){
 
 #ifdef PRINT_DEBUG_INFO
       printf("(1U << %d) ===> flag_data_list[%d]\n", bit_shift_num, i );
@@ -327,7 +329,7 @@ static int convert_bit_shift_num_to_flag_data_list_element( int bit_shift_num )
 
 static int convert_num_to_bit_shift_num(unsigned int arg_num){
   int x;
-  for ( x=0; (x < TOTAL_NUM_OF_BITS); x++ )
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
   {
      if ( arg_num == (1U << x) )
      {
@@ -336,7 +338,7 @@ static int convert_num_to_bit_shift_num(unsigned int arg_num){
   }
 
   /* Error */
-  printf("<Error:line%d> '%x' is not bit flag.\n", __LINE__, arg_num );
+  printf("<Error:line%d> '0x%08x' is not bit flag.\n", __LINE__, arg_num );
   exit(-1);
   return -1;
 }
@@ -347,7 +349,7 @@ static int check_flag_data_duplication()
   int i, shift_num;
   unsigned int used_bits = 0;
 
-  for ( i=0; i < num_of_flags; i++ )
+  for (i = 0; i < num_of_flags; i++)
   {
     if ( (used_bits & flag_data_list[i].num) != 0 ){
 
@@ -375,14 +377,14 @@ static void print_flag_data_list()
   int i, shift_num;
 
   PRINT_SEPARATOR;
-  for (i=0; i < num_of_flags; i++ )
+  for (i = 0; i < num_of_flags; i++)
   {
     shift_num = convert_num_to_bit_shift_num( flag_data_list[i].num );
 
     printf( "\nflag_data_list[%d]\n", i);
     printf( "name='%s' "   , flag_data_list[i].name);
     printf( "(1U << %d)\n" , shift_num);
-    printf( "num=0x%x\n"   , flag_data_list[i].num);
+    printf( "num=0x%08x\n"   , flag_data_list[i].num);
   }
   return ;
 }
@@ -397,24 +399,33 @@ static void print_table_head()
   printf("\n### ");
   printf( TITLE_STRING );
   printf("\n\n| ID    | Option");
-  for (i=0; i < (flag_name_max_len - 1); i++){ printf(" "); }
+  for (i = 0; i < (flag_name_max_len - 1); i++)
+  {
+    printf(" ");
+  }
   printf("|");
 
   /*  ex. print "PeNG "  */
 #ifdef PRINT_SYNTAX_FORWARD_ORDER
-  for ( y=0; y < num_of_syntax_types; y++)
+  for (y = 0; y < num_of_syntax_types; y++)
 #else
-  for ( y=num_of_syntax_types -1; y > -1; y--)
+  for (y = num_of_syntax_types -1; y > -1; y--)
 #endif
   {
     printf(" %-5.5s |", syn_data_list[y].abb );
   }
 
   printf("\n| ----- | ");
-  for (i=0; i < (flag_name_max_len + 4); i++){ printf("-"); }
+  for (i = 0; i < (flag_name_max_len + 4); i++)
+  {
+    printf("-");
+  }
   printf(" |");
 
-  for ( y=0; y < num_of_syntax_types; y++ ){ printf(" ----- |"); }
+  for (y = 0; y < num_of_syntax_types; y++)
+  {
+    printf(" ----- |");
+  }
   printf("\n");
   return ;
 }
@@ -439,12 +450,12 @@ static void print_table_body_one_line( int shift_num )
 
   /*  ex. print  ' Yes   |'   */
 #ifdef PRINT_SYNTAX_FORWARD_ORDER
-  for ( y=0; y < num_of_syntax_types; y++)
+  for (y = 0; y < num_of_syntax_types; y++)
 #else
-  for ( y=num_of_syntax_types -1; y > -1; y--)
+  for (y = num_of_syntax_types -1; y > -1; y--)
 #endif
   {
-    if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, ( 1U << shift_num)) )
+    if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << shift_num)) )
     {
       printf(" Yes   |");
     } else {
@@ -459,7 +470,7 @@ static void print_table_body_one_line( int shift_num )
 static void print_table_body()
 {
   int x, elem;
-  for ( x=0; x < TOTAL_NUM_OF_BITS; x++)
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
   {
     elem = convert_bit_shift_num_to_flag_data_list_element( x );
 
@@ -494,9 +505,9 @@ static void print_set_in_one_line(int shift_num)
   count = 0;
   printf("_Set in: ");
 #ifdef PRINT_SYNTAX_FORWARD_ORDER
-  for ( y=0; y < num_of_syntax_types; y++)
+  for (y = 0; y < num_of_syntax_types; y++)
 #else
-  for ( y=num_of_syntax_types -1; y > -1; y--)
+  for (y = num_of_syntax_types -1; y > -1; y--)
 #endif
   {
     if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << shift_num)) )
@@ -522,7 +533,7 @@ static void print_set_in()
   printf("The following are 'Set in' for oniguruma/doc/SYNTAX.md\n\n## ");
   printf( TITLE_STRING );
   printf("\n\n");
-  for ( x=0; x < TOTAL_NUM_OF_BITS; x++)
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
   {
     elem = convert_bit_shift_num_to_flag_data_list_element( x );
 
@@ -566,7 +577,7 @@ static void print_debug()
   /*  print: (1U << x) ===> flag_data_list[elem] */
   PRINT_SEPARATOR;
   printf("\nThe following are the array elements that correspond to each bit.\n\n");
-  for ( x=0; (x < TOTAL_NUM_OF_BITS); x++)
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
   {
     convert_bit_shift_num_to_flag_data_list_element(x);
   }
@@ -578,12 +589,12 @@ static void warn_undefined_flag_used()
 {
   int x, y, elem;
 
-  for ( x=0; x < TOTAL_NUM_OF_BITS; x++)
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
   {
     elem = convert_bit_shift_num_to_flag_data_list_element(x);
 
     if (elem < 0){
-      for ( y=0; y < num_of_syntax_types; y++)
+      for (y = 0; y < num_of_syntax_types; y++)
       {
         if ( IS_SYNTAX_MEMBER( syn_data_list[y].syn, (1U << x) ) )
         {
@@ -654,5 +665,3 @@ extern int main(int argc, char* argv[])
 
   return 0;
 }
-
-
