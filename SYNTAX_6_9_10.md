@@ -1,4 +1,4 @@
-﻿
+
 # Oniguruma syntax (operator) configuration
 
 _Documented for Oniguruma 6.9.10 (2024/12/21)_
@@ -38,7 +38,7 @@ follow.
 The `options` field describes the default compile options to use if the caller does
 not specify any options when invoking `onig_new()`.
 
-The `meta_char_table` field is used exclusively by the ONIG_SYN_OP_VARIABLE_META_CHARACTERS
+The `meta_char_table` field is used exclusively by the `ONIG_SYN_OP_VARIABLE_META_CHARACTERS`
 option, which allows the various regex metacharacters, like `*` and `?`, to be replaced
 with alternates (for example, SQL typically uses `%` instead of `.*` and `_` instead of `?`).
 
@@ -374,7 +374,7 @@ _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, Emacs, PosixExtended, Pos
 
 Enables support for C-style control-code escapes, like `\n` and `\r`.  Specifically,
 this recognizes `\a` (7), `\b` (8), `\t` (9), `\n` (10), `\f` (12), `\r` (13), and
-`\e` (27).  If ONIG_SYN_OP2_ESC_V_VTAB is enabled (see below), this also enables
+`\e` (27).  If `ONIG_SYN_OP2_ESC_V_VTAB` is enabled (see below), this also enables
 support for recognizing `\v` as code point 11.
 
 
@@ -562,7 +562,7 @@ followed by a single character (or equivalent), indicating which code point to r
 based on that character's lowest five bits.  So, like `\c`, you can represent code-point
 10 with `\C-j`, but you can also represent it with `\C-*` as well.
 
-See also ONIG_SYN_OP_ESC_C_CONTROL, which enables the more-common `\cx` syntax.
+See also `ONIG_SYN_OP_ESC_C_CONTROL`, which enables the more-common `\cx` syntax.
 
 
 ### 12. ONIG_SYN_OP2_ESC_CAPITAL_M_BAR_META (enable `\M-x`)
@@ -593,8 +593,8 @@ for example, `\u221E` will match an infinity symbol, `∞`.
 
 For code points larger than four digits, like the emoji `🚡` (aerial tramway, or code
 point U+1F6A1), you must either represent the character directly using an encoding like
-UTF-8, or you must enable support for ONIG_SYN_OP_ESC_X_BRACE_HEX8 or
-ONIG_SYN_OP_ESC_O_BRACE_OCTAL, which support more than four digits.
+UTF-8, or you must enable support for `ONIG_SYN_OP_ESC_X_BRACE_HEX8` or
+`ONIG_SYN_OP_ESC_O_BRACE_OCTAL`, which support more than four digits.
 
 (New feature as of Oniguruma 6.7.)
 
@@ -604,7 +604,7 @@ ONIG_SYN_OP_ESC_O_BRACE_OCTAL, which support more than four digits.
 _Set in: Emacs_
 
 This flag makes the ``\` `` and `\'` escapes function identically to
-`\A` and `\z`, respectively (when ONIG_SYN_OP_ESC_AZ_BUF_ANCHOR is enabled).
+`\A` and `\z`, respectively (when `ONIG_SYN_OP_ESC_AZ_BUF_ANCHOR` is enabled).
 
 These anchor forms are very obscure, and rarely supported by other regex libraries.
 
@@ -616,7 +616,7 @@ _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java_
 Enables support for an alternate syntax for POSIX character classes; instead of
 writing `[:alpha:]` when this is enabled, you can instead write `\p{alpha}`.
 
-See also ONIG_SYN_OP_POSIX_BRACKET for the classic POSIX form.
+See also `ONIG_SYN_OP_POSIX_BRACKET` for the classic POSIX form.
 
 
 ### 17. ONIG_SYN_OP2_ESC_P_BRACE_CIRCUMFLEX_NOT (enable `\p{^...}` and `\P{^...}`)
@@ -626,7 +626,7 @@ _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl_
 Enables support for an alternate syntax for POSIX character classes; instead of
 writing `[:^alpha:]` when this is enabled, you can instead write `\p{^alpha}`.
 
-See also ONIG_SYN_OP_POSIX_BRACKET for the classic POSIX form.
+See also `ONIG_SYN_OP_POSIX_BRACKET` for the classic POSIX form.
 
 
 ### 18. ONIG_SYN_OP2_CHAR_PROPERTY_PREFIX_IS
@@ -832,14 +832,14 @@ _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, GnuRegex, PosixExtended_
 This flag specifies how to handle operators like `?` and `*` when they aren't
 directly attached to an operand, as in `^*` or `(*)`:  Are they an error, are
 they discarded, or are they taken as literals?  If this flag is clear, they
-are taken as literals; otherwise, the ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS flag
+are taken as literals; otherwise, the `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS` flag
 determines if they are errors or if they are discarded.
 
 ### 1. ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS (error or ignore independent operators)
 
 _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, GnuRegex, PosixExtended_
 
-If ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS is set, this flag controls what happens when
+If `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS` is set, this flag controls what happens when
 independent operators appear in a pattern:  If this flag is set, then independent
 operators produce an error message; if this flag is clear, then independent
 operators are silently discarded.
@@ -868,7 +868,7 @@ If this flag is set, then `r{,n}` will be treated as equivalent to writing
 `{0,n}`.  If this flag is clear, then `r{,n}` will produce an error message.
 
 Note that regardless of whether this flag is set or clear, if
-ONIG_SYN_OP_BRACE_INTERVAL is enabled, then `r{n,}` will always be legal:  This
+`ONIG_SYN_OP_BRACE_INTERVAL` is enabled, then `r{n,}` will always be legal:  This
 flag *only* controls the behavior of the opposite form, `r{,n}`.
 
 ### 5. ONIG_SYN_STRICT_CHECK_BACKREF (error on invalid backrefs)
@@ -897,7 +897,7 @@ depend on this rule.
 
 _Set in: Oniguruma, Ruby, Perl_NG_
 
-If this flag is set on the syntax *and* ONIG_OPTION_CAPTURE_GROUP is set when calling
+If this flag is set on the syntax *and* `ONIG_OPTION_CAPTURE_GROUP` is set when calling
 Oniguruma, then if a name is used on any capture, all captures must also use names:  A
 single use of a named capture prohibits the use of numbered captures.
 
@@ -922,7 +922,7 @@ then `r{n}?` will mean the same as `r{n}`, and the useless `?` will be discarded
 _Set in: Python, Perl_NG, Perl, Java_
 
 If this flag is set, then an isolated option doesn't break the branch and affects until the end of the group (or end of the pattern).
-If this flag is not set, then an isolated option is interpreted as the starting point of a new branch. /a(?i)b|c/ ==> /a(?i:b|c)/
+If this flag is not set, then an isolated option is interpreted as the starting point of a new branch. `/a(?i)b|c/` ==> `/a(?i:b|c)/`
 
 ### 11. ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND (`(?<=...a+...)`)
 
