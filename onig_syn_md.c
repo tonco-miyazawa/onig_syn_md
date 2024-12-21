@@ -1,4 +1,4 @@
-/*
+﻿/*
  * onig_syn_md.c
  * Copyright (c) 2024  K.Kosako
  *
