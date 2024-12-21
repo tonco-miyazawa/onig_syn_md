@@ -1,7 +1,7 @@
 ﻿
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.10 (2024/12/19)_
+_Documented for Oniguruma 6.9.10 (2024/12/21)_
 
 
 ----------
@@ -814,7 +814,7 @@ Enables support of regex options. (i,m,x,W,S,D,P,y)
 
 _Set in: Python_
 
-
+(New feature as of Oniguruma 6.9.7)
 
 ----------
 
@@ -934,19 +934,19 @@ If this flag is set, then a variable length expressions are allowed in look-behi
 
 _Set in: Python_
 
-
+(New feature as of Oniguruma 6.9.7)
 
 ### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CLI)`)
 
 _Set in: Oniguruma_
 
-
+(New feature as of Oniguruma 6.9.8)
 
 ### 14. ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP (enable `\(^abc$\)`)
 
 _Set in: Grep, PosixBasic_
 
-
+(New feature as of Oniguruma 6.9.9)
 
 ### 20. ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC (add `\n` to `[^...]`)
 
@@ -1008,7 +1008,7 @@ If this flag is set, then invalid code points at the end of range in character c
 
 _Set in: Perl_NG, Perl, Java_
 
-
+(New feature as of Oniguruma 6.9.10)
 
 ### 31. ONIG_SYN_CONTEXT_INDEP_ANCHORS
 
