@@ -819,7 +819,7 @@ _Set in: Python_
 ----------
 
 
-## Syntax Flags (syn)
+## Syntax Flags (behavior)
 
 
 This group contains rules to handle corner cases and constructs that are errors in
