@@ -1,8 +1,8 @@
 ﻿/*
  * onig_syn_md.c
- * Copyright (c) 2024  K.Kosako
+ * Copyright (c) 2024-2025  K.Kosako
  *
- * Oniguruma OWner: K.Kosako       https://github.com/kkos/oniguruma
+ * Oniguruma Owner: K.Kosako       https://github.com/kkos/oniguruma
  * SYNTAX.md      : seanofw        https://github.com/seanofw
  * onig_syn_md.c  : tonco-miyazawa https://github.com/tonco-miyazawa
  */
@@ -12,21 +12,20 @@
 #include <string.h>
 #include "oniguruma.h"
 
-#define ONIG_SYN_MD_VERSION_INT           (00002)
+#define ONIG_SYN_MD_VERSION_INT           (00003)
 #define TOTAL_NUM_OF_BITS                 (32)
 
 #define PRINT_SEPARATOR                   (printf("===================================================\n"))
 
-#define INPUT_SYNTAX(syn, abb, set_in)    { (syn), (#syn), (abb), (set_in) }
+#define INPUT_SYNTAX(syn, abbrev, set_in) { (syn), (#syn), (abbrev), (set_in) }
 #define INPUT_FLAG(arg)                   { (arg), (#arg) }
-
 
 
 /************************************* Settings *********************************************/
 /* NOW_MODE
-1: (OP)
-2: (OP2)
-3: (BEHAVIOR) */
+1: (op)
+2: (op2)
+3: (behavior) */
 #define NOW_MODE                          (1)
 
 /*  #define PRINT_UNDEFINED_FLAG  */
@@ -35,41 +34,33 @@
 
 /*  #define USE_YOUR_OWN_SYNTAX  */
 
-/*  #define PRINT_DEBUG_INFO  */
-
 #define PRINT_VERSION_INFO
 #define PRINT_SET_IN_INFO
-#define PRINT_TABLE_INFO
-#define WARN_UNDEFINED_FLAG_USED
+#define PRINT_FLAG_TABLE
+#define PRINT_SYNTAX_TABLE
+#define WARN_UNDEFINED_FLAG_IS_USED
+/*  #define PRINT_DEBUG_INFO  */
+
 /************************************* Settings *********************************************/
 
 
-/************************ Switch between OP, OP2, BEHAVIOR **********************************/
+/********************* Switch between (op), (op2), (behavior) *******************************/
 #if   NOW_MODE == 1
-
-#define SYNTAX_MEMBER_NAME                ("op")
 #define TITLE_STRING                      ("Group One Flags (op)")
-#define SYNTAX_MEMBER(syn)                ((syn)->op)
 #define IS_SYNTAX_MEMBER(syn, opm)        (((syn)->op & (opm)) != 0)
 
 #elif NOW_MODE == 2
-
-#define SYNTAX_MEMBER_NAME                ("op2")
 #define TITLE_STRING                      ("Group Two Flags (op2)")
-#define SYNTAX_MEMBER(syn)                ((syn)->op2)
 #define IS_SYNTAX_MEMBER(syn, opm)        (((syn)->op2 & (opm)) != 0)
 
 #elif NOW_MODE == 3
-
-#define SYNTAX_MEMBER_NAME                ("behavior")
-#define TITLE_STRING                      ("Syntax Flags (syn)")
-#define SYNTAX_MEMBER(syn)                ((syn)->behavior)
+#define TITLE_STRING                      ("Syntax Flags (behavior)")
 #define IS_SYNTAX_MEMBER(syn, opm)        (((syn)->behavior & (opm)) != 0)
 
 #else
-#error "Check 'NOW_MODE' value."
+#error "Please check 'NOW_MODE' value."
 #endif
-/************************ Switch between OP, OP2, BEHAVIOR **********************************/
+/********************* Switch between (op), (op2), (behavior) *******************************/
 
 
 /*********************************** Your own syntax ****************************************/
@@ -80,7 +71,7 @@ static OnigSyntaxType OnigSyntaxYourOwn;
 static OnigSyntaxType OnigSyntaxYourOwn = {
     0xf0f0f0f0      /*  Group One Flags (op)   */
   , 0xffff0000      /*  Group Two Flags (op2)  */
-  , 0x00ff00ff      /*  Syntax Flags    (syn)  */
+  , 0x0000ffff      /*  Syntax Flags    (behavior)  */
   , ONIG_OPTION_NONE
   ,
   {
@@ -100,16 +91,16 @@ static OnigSyntaxType OnigSyntaxYourOwn = {
 typedef struct {
     OnigSyntaxType* syn;
     char *name;
-    char *abb;
+    char *abbrev;
     char *set_in;
 } syn_data;
 
 
 static syn_data  syn_data_list[] =
 {
-   /*  INPUT_SYNTAX(syn, abb, set_in)  ===>   { (syn), (#syn), (abb), (set_in) }  */
+   /*  INPUT_SYNTAX(syn, abbrev, set_in)  ===>   { (syn), (#syn), (abbrev), (set_in) }  */
 
-    INPUT_SYNTAX( ONIG_SYNTAX_ASIS           , "ASIS" , "ASIS" )
+    INPUT_SYNTAX( ONIG_SYNTAX_ASIS           , "Asis" , "As-is" )
   , INPUT_SYNTAX( ONIG_SYNTAX_POSIX_BASIC    , "PosB" , "PosixBasic" )
   , INPUT_SYNTAX( ONIG_SYNTAX_POSIX_EXTENDED , "PosEx", "PosixExtended")
   , INPUT_SYNTAX( ONIG_SYNTAX_EMACS          , "Emacs", "Emacs")
@@ -119,7 +110,7 @@ static syn_data  syn_data_list[] =
   , INPUT_SYNTAX( ONIG_SYNTAX_PERL           , "Perl" , "Perl" )
   , INPUT_SYNTAX( ONIG_SYNTAX_PERL_NG        , "PeNG" , "Perl_NG" )
   , INPUT_SYNTAX( ONIG_SYNTAX_RUBY           , "Ruby" , "Ruby" )
-  , INPUT_SYNTAX( ONIG_SYNTAX_PYTHON         , "Pythn", "Python")
+  , INPUT_SYNTAX( ONIG_SYNTAX_PYTHON         , "Pyth" , "Python")
   , INPUT_SYNTAX( ONIG_SYNTAX_ONIGURUMA      , "Onig" , "Oniguruma" )
 
 #ifdef USE_YOUR_OWN_SYNTAX
@@ -127,24 +118,36 @@ static syn_data  syn_data_list[] =
 #endif
 };
 
-static const int num_of_syntax_types = (sizeof syn_data_list /sizeof syn_data_list[0]);
+static const int num_of_syntax_types = (sizeof syn_data_list / sizeof syn_data_list[0]);
 
+static int syntax_name_max_len = 0;
 
-static void print_syn_data_list()
+static int
+syntax_name_max_len_int()
+{
+  int i, n, max_len;
+  max_len = 0;
+
+  for (i = 0; i < num_of_syntax_types; i++) {
+    n = strlen(syn_data_list[i].name);
+    if (max_len < n) max_len = n;
+  }
+  return max_len;
+}
+
+static void
+print_syn_data_list()
 {
   int y;
   PRINT_SEPARATOR;
-  for (y = 0; y < num_of_syntax_types; y++)
-  {
-    printf( "\nsyn_data_list[%d]\n", y);
-    printf( "name='%s'\n"   , syn_data_list[y].name);
-
-    printf( "syn->");
-    printf( SYNTAX_MEMBER_NAME );
-    printf( "= 0x%08x\n", SYNTAX_MEMBER(syn_data_list[y].syn) );
-
-    printf( "abb='%s'\n"    , syn_data_list[y].abb);
-    printf( "set_in='%s'\n"    , syn_data_list[y].set_in);        
+  for (y = 0; y < num_of_syntax_types; y++) {
+    printf("\nsyn_data_list[%d]\n", y);
+    printf("%s   ", syn_data_list[y].name);
+    printf("(op) 0x%08x", syn_data_list[y].syn->op);
+    printf(", (op2) 0x%08x", syn_data_list[y].syn->op2);
+    printf(", (behavior) 0x%08x\n", syn_data_list[y].syn->behavior);
+    printf("set_in : '%s'\n" , syn_data_list[y].set_in);
+    printf("abbrev : '%s'\n"    , syn_data_list[y].abbrev);
   };
   return ;
 }
@@ -158,7 +161,7 @@ typedef struct {
 } flag_data;
 
 
-/*  OP  */
+/*  (op)  */
 #if NOW_MODE == 1
 static flag_data  flag_data_list[] =
 {
@@ -203,7 +206,7 @@ static flag_data  flag_data_list[] =
 #endif
 
 
-/*  OP2 */
+/*  (op2) */
 #if NOW_MODE == 2
 static flag_data  flag_data_list[] =
 {
@@ -244,7 +247,7 @@ static flag_data  flag_data_list[] =
 #endif
 
 
-/*  BEHAVIOR  */
+/*  (behavior) */
 #if NOW_MODE == 3
 static flag_data  flag_data_list[] =
 {
@@ -264,6 +267,7 @@ static flag_data  flag_data_list[] =
   , INPUT_FLAG( ONIG_SYN_PYTHON )
   , INPUT_FLAG( ONIG_SYN_WHOLE_OPTIONS )
   , INPUT_FLAG( ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP )
+  , INPUT_FLAG( ONIG_SYN_ESC_P_WITH_ONE_CHAR_PROP )
 
   /* syntax (behavior) in char class [...] */
   , INPUT_FLAG( ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC )
@@ -280,78 +284,62 @@ static flag_data  flag_data_list[] =
 #endif
 
 
-static const int num_of_flags = (sizeof flag_data_list /sizeof flag_data_list[0]);
+static const int num_of_flags = (sizeof flag_data_list / sizeof flag_data_list[0]);
 
 static int flag_name_max_len = 0;
 
-
-static int flag_name_max_len_int()
+static int
+flag_name_max_len_int()
 {
   int i, n, max_len;
   max_len = 0;
 
-  for (i = 0; i < num_of_flags; i++)
-  {
+  for (i = 0; i < num_of_flags; i++) {
     n = strlen(flag_data_list[i].name);
-    if ( max_len < n )
-    {
-      max_len = n;
-    }
+    if ( max_len < n ) max_len = n;
   }
-
-  /*  Debug: printf("max_len=%d\n", max_len);  */
   return max_len;
 }
 
-
-static int convert_bit_shift_num_to_flag_data_list_element( int bit_shift_num )
+static int
+convert_bit_shift_num_to_flag_data_list_element(int bit_shift_num)
 {
   int i;
-  for (i = 0; i < num_of_flags; i++)
-  {
-    if ( flag_data_list[i].num == (1U << bit_shift_num) ){
-
+  for (i = 0; i < num_of_flags; i++) {
+    if ( flag_data_list[i].num == (1U << bit_shift_num) ) {
 #ifdef PRINT_DEBUG_INFO
       printf("(1U << %d) ===> flag_data_list[%d]\n", bit_shift_num, i );
 #endif
       return i;
     }
   }
-
 #ifdef PRINT_DEBUG_INFO
   printf("(1U << %d) ===>     ( none )\n", bit_shift_num );
 #endif
-
   /*  If not found, returns "-1". This is not Error. */
   return -1;
 }
 
-
-static int convert_num_to_bit_shift_num(unsigned int arg_num){
+static int
+convert_num_to_bit_shift_num(unsigned int arg_num) {
   int x;
-  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
-  {
-     if ( arg_num == (1U << x) )
-     {
-       return x;
-     }
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++) {
+     if ( arg_num == (1U << x) ) return x;
   }
-
   /* Error */
   printf("<Error:line%d> '0x%08x' is not bit flag.\n", __LINE__, arg_num );
   exit(-1);
   return -1;
 }
 
-
-static int check_flag_data_duplication()
+static int
+check_flag_data_duplication()
 {
   int i, shift_num;
   unsigned int used_bits = 0;
 
-  for (i = 0; i < num_of_flags; i++)
-  {
-    if ( (used_bits & flag_data_list[i].num) != 0 ){
+  for (i = 0; i < num_of_flags; i++) {
+    if ( (used_bits & flag_data_list[i].num) != 0 ) {
 
        shift_num = convert_num_to_bit_shift_num(flag_data_list[i].num);
 
@@ -359,7 +347,6 @@ static int check_flag_data_duplication()
        fprintf(stderr, "\n<Error:line%d>  The following bit has already been used.\n", __LINE__ );
        fprintf(stderr, "flag_data_list[%d] : '%s' ", i, flag_data_list[i].name);
        fprintf(stderr, "(1U << %d)\n", shift_num);
-
 #ifndef PRINT_DEBUG_INFO
        fprintf(stderr, "\nPlease use '#define PRINT_DEBUG_INFO'.\n");
 #endif
@@ -371,20 +358,19 @@ static int check_flag_data_duplication()
   return 0;
 }
 
-
-static void print_flag_data_list()
+static void
+print_flag_data_list()
 {
   int i, shift_num;
 
   PRINT_SEPARATOR;
-  for (i = 0; i < num_of_flags; i++)
-  {
-    shift_num = convert_num_to_bit_shift_num( flag_data_list[i].num );
+  for (i = 0; i < num_of_flags; i++) {
+    shift_num = convert_num_to_bit_shift_num(flag_data_list[i].num);
 
     printf( "\nflag_data_list[%d]\n", i);
     printf( "name='%s' "   , flag_data_list[i].name);
     printf( "(1U << %d)\n" , shift_num);
-    printf( "num=0x%08x\n"   , flag_data_list[i].num);
+    printf( "num=0x%08x\n" , flag_data_list[i].num);
   }
   return ;
 }
@@ -392,46 +378,43 @@ static void print_flag_data_list()
 
 
 /************************************** print table *****************************************/
-static void print_table_head()
+static void
+print_flag_table_head()
 {
   int i, y;
 
   printf("\n### ");
   printf( TITLE_STRING );
   printf("\n\n| ID    | Option");
-  for (i = 0; i < (flag_name_max_len - 1); i++)
-  {
+  for (i = 0; i < (flag_name_max_len - 1); i++) {
     printf(" ");
   }
   printf("|");
 
   /*  ex. print "PeNG "  */
 #ifdef PRINT_SYNTAX_FORWARD_ORDER
-  for (y = 0; y < num_of_syntax_types; y++)
+  for (y = 0; y < num_of_syntax_types; y++) {
 #else
-  for (y = num_of_syntax_types -1; y > -1; y--)
+  for (y = num_of_syntax_types -1; y > -1; y--) {
 #endif
-  {
-    printf(" %-5.5s |", syn_data_list[y].abb );
+    printf(" %-5.5s |", syn_data_list[y].abbrev );
   }
 
   printf("\n| ----- | ");
-  for (i = 0; i < (flag_name_max_len + 4); i++)
-  {
+  for (i = 0; i < (flag_name_max_len + 4); i++) {
     printf("-");
   }
   printf(" |");
 
-  for (y = 0; y < num_of_syntax_types; y++)
-  {
+  for (y = 0; y < num_of_syntax_types; y++) {
     printf(" ----- |");
   }
   printf("\n");
   return ;
 }
 
-
-static void print_table_body_one_line( int shift_num )
+static void
+print_flag_table_body_one_line( int shift_num )
 {
   int i, y, elem, name_chars;
 
@@ -439,24 +422,24 @@ static void print_table_body_one_line( int shift_num )
 
   printf("| %2d    | ", shift_num);
 
-  if (elem < 0){
+  if (elem < 0) {
     name_chars = printf("     `( Undefined )`");    /*  elem == -1  */
   } else {
     name_chars = printf("`%s`", flag_data_list[elem].name);
   }
 
-  for ( i=0; i < (flag_name_max_len - name_chars + 5); i++){ printf(" "); }
+  for ( i=0; i < (flag_name_max_len - name_chars + 5); i++) {
+    printf(" ");
+  }
   printf("|");
 
   /*  ex. print  ' Yes   |'   */
 #ifdef PRINT_SYNTAX_FORWARD_ORDER
-  for (y = 0; y < num_of_syntax_types; y++)
+  for (y = 0; y < num_of_syntax_types; y++) {
 #else
-  for (y = num_of_syntax_types -1; y > -1; y--)
+  for (y = num_of_syntax_types -1; y > -1; y--) {
 #endif
-  {
-    if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << shift_num)) )
-    {
+    if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << shift_num)) ) {
       printf(" Yes   |");
     } else {
       printf(" -     |");
@@ -466,37 +449,34 @@ static void print_table_body_one_line( int shift_num )
   return ;
 }
 
-
-static void print_table_body()
+static void
+print_flag_table_body()
 {
   int x, elem;
-  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
-  {
-    elem = convert_bit_shift_num_to_flag_data_list_element( x );
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++) {
+    elem = convert_bit_shift_num_to_flag_data_list_element(x);
 
-    if (elem < 0)
-    {
-#if !(defined( PRINT_UNDEFINED_FLAG ))
-      continue;
+    if (elem < 0) {
+#ifndef PRINT_UNDEFINED_FLAG
+      continue;    /*  elem == -1  */
 #endif
     }
-    print_table_body_one_line(x);
+    print_flag_table_body_one_line(x);
   }
   return ;
 }
-
 /************************************** print table *****************************************/
 
 
 /************************************* print Set_in *****************************************/
-static void print_set_in_one_line(int shift_num)
+static void
+print_set_in_one_line(int shift_num)
 {
   int y, elem, count;
 
   elem = convert_bit_shift_num_to_flag_data_list_element(shift_num);
 
-  if (elem < 0)
-  {
+  if (elem < 0) {
     printf("### %d.       ( Undefined )\n", shift_num );    /*  elem == -1  */
   } else {
     printf("### %d. %s\n", shift_num, flag_data_list[elem].name );
@@ -505,27 +485,24 @@ static void print_set_in_one_line(int shift_num)
   count = 0;
   printf("_Set in: ");
 #ifdef PRINT_SYNTAX_FORWARD_ORDER
-  for (y = 0; y < num_of_syntax_types; y++)
+  for (y = 0; y < num_of_syntax_types; y++) {
 #else
-  for (y = num_of_syntax_types -1; y > -1; y--)
+  for (y = num_of_syntax_types -1; y > -1; y--) {
 #endif
-  {
-    if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << shift_num)) )
-    {
-      if (count > 0){ printf(", "); };
+    if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << shift_num)) ) {
+      if (count > 0) printf(", ");
       printf("%s", syn_data_list[y].set_in);
       count++;
     }
-  }   /* for y */
+  }
 
-  if (count==0){ printf("none"); };
-
+  if (count==0) printf("none");
   printf("_\n\n");
   return ;
 }
 
-
-static void print_set_in()
+static void
+print_set_in()
 {
   int x, elem;
 
@@ -533,14 +510,12 @@ static void print_set_in()
   printf("The following are 'Set in' for oniguruma/doc/SYNTAX.md\n\n## ");
   printf( TITLE_STRING );
   printf("\n\n");
-  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
-  {
-    elem = convert_bit_shift_num_to_flag_data_list_element( x );
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++) {
+    elem = convert_bit_shift_num_to_flag_data_list_element(x);
 
-    if (elem < 0)
-    {
-#if !(defined( PRINT_UNDEFINED_FLAG ))
-      continue;
+    if (elem < 0) {
+#ifndef PRINT_UNDEFINED_FLAG
+      continue;    /*  elem == -1  */
 #endif
     }
 
@@ -548,24 +523,28 @@ static void print_set_in()
   }
   return ;
 }
-
 /************************************* print Set_in *****************************************/
 
 
-/**************************************    main()   *****************************************/
+/****************************** print Syntax option value ***********************************/
 
-static void print_version()
+               /* To do : Print the numeric value of syntax options in a table */
+
+/****************************** print Syntax option value ***********************************/
+
+
+/**************************************    main()   *****************************************/
+static void
+print_version()
 {
-  printf( "[ onig_syn_md.c ver.%05d ] ", ONIG_SYN_MD_VERSION_INT );
+  printf( "[ onig_syn_md.c ver.%05d ] [ NOW_MODE %d ] ", ONIG_SYN_MD_VERSION_INT, NOW_MODE );
   printf("The loaded oniguruma is '%d.%d.%d'.\n"
-    , ONIGURUMA_VERSION_MAJOR
-    , ONIGURUMA_VERSION_MINOR
-    , ONIGURUMA_VERSION_TEENY );
+    , ONIGURUMA_VERSION_MAJOR, ONIGURUMA_VERSION_MINOR, ONIGURUMA_VERSION_TEENY );
   return ;
 }
 
-
-static void print_debug()
+static void
+print_debug()
 {
   int x;
 
@@ -574,34 +553,30 @@ static void print_debug()
   print_flag_data_list();
   check_flag_data_duplication();
 
-  /*  print: (1U << x) ===> flag_data_list[elem] */
+  /*  '(1U << x) ===> flag_data_list[elem]' */
   PRINT_SEPARATOR;
   printf("\nThe following are the array elements that correspond to each bit.\n\n");
-  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
-  {
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++) {
     convert_bit_shift_num_to_flag_data_list_element(x);
   }
   return ;
 }
 
-
-static void warn_undefined_flag_used()
+static void
+warn_undefined_flag_is_used()
 {
   int x, y, elem;
 
-  for (x = 0; x < TOTAL_NUM_OF_BITS; x++)
-  {
+  for (x = 0; x < TOTAL_NUM_OF_BITS; x++) {
     elem = convert_bit_shift_num_to_flag_data_list_element(x);
 
-    if (elem < 0){
-      for (y = 0; y < num_of_syntax_types; y++)
-      {
-        if ( IS_SYNTAX_MEMBER( syn_data_list[y].syn, (1U << x) ) )
-        {
+    if (elem < 0) {
+      for (y = 0; y < num_of_syntax_types; y++) {
+        if ( IS_SYNTAX_MEMBER(syn_data_list[y].syn, (1U << x)) ) {
           PRINT_SEPARATOR;
           printf("warning: An undefined bit flag is used.");
           printf("  (1U << %d)\n\n", x);
-          print_set_in_one_line( x );
+          print_set_in_one_line(x);
 
 #ifndef PRINT_UNDEFINED_FLAG
           printf("Please use '#define PRINT_UNDEFINED_FLAG'.\n");
@@ -614,8 +589,8 @@ static void warn_undefined_flag_used()
   return ;
 }
 
-
-extern int main(int argc, char* argv[])
+extern int
+main(int argc, char* argv[])
 {
 #ifdef PRINT_DEBUG_INFO
   print_debug();
@@ -628,39 +603,39 @@ extern int main(int argc, char* argv[])
 
   flag_name_max_len = flag_name_max_len_int();
   check_flag_data_duplication();
+  
+  syntax_name_max_len = syntax_name_max_len_int();
+
+#ifdef PRINT_SYNTAX_TABLE
+  /*
+  print_syn_table_head();
+  print_syn_table_body();
+   */
+#endif  
 
 #ifdef PRINT_SET_IN_INFO
   print_set_in();
 #endif
 
-#ifdef PRINT_TABLE_INFO
-  print_table_head();
-  print_table_body();
+#ifdef PRINT_FLAG_TABLE
+  print_flag_table_head();
+  print_flag_table_body();
 #endif
 
-#ifdef WARN_UNDEFINED_FLAG_USED
-  warn_undefined_flag_used();
+#ifdef WARN_UNDEFINED_FLAG_IS_USED
+  warn_undefined_flag_is_used();
 #endif
-
-  /*  test  */
-  /*
-  printf("\n------  test -------\n");
-
-  int test_x = 17;
-  print_set_in_one_line( test_x );
-  print_table_body_one_line( test_x );
-  printf("--------------------\n");
-  */
 
   /*  To avoid 'gcc -Wall' warnings.  */
   if (0)
   {
     print_debug();
     print_version();
+    print_syn_data_list();
     print_set_in();
-    print_table_head();
-    print_table_body();
-    warn_undefined_flag_used();
+    print_flag_table_head();
+    print_flag_table_body();
+    warn_undefined_flag_is_used();
   }
 
   return 0;
