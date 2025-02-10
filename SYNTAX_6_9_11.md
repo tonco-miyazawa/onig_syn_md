@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.10 (2024/12/21)_
+_Documented for Oniguruma 6.9.11 (2025/02/11)_
 
 
 ----------
@@ -647,7 +647,7 @@ characters in `[0-9a-fA-F]`.
 
 ### 20. ONIG_SYN_OP2_INEFFECTIVE_ESCAPE (disable `\`)
 
-_Set in: ASIS_
+_Set in: As-is_
 
 If set, this disables all escape codes, shorthands, and metacharacters that start
 with `\` (or whatever the configured escape character is), allowing `\` to be treated
@@ -772,7 +772,7 @@ function set in `onig_set_progress_callout()` will be invoked, and be able to pe
 custom computation during the pattern match (and during backtracking).
 
 Full documentation for this advanced feature can be found in the Oniguruma
-`docs/CALLOUT.md` file, with an example in `samples/callout.c`.
+`/doc/` folder, with an example in `sample/callout.c`.
 
 (New feature as of Oniguruma 6.8.)
 
@@ -788,7 +788,7 @@ function set in `onig_set_callout_of_name()` will be invoked, passing the given 
 during backtracking).
 
 Full documentation for this advanced feature can be found in the Oniguruma
-`docs/CALLOUT.md` file, with an example in `samples/callout.c`.
+`/doc/` folder, with an example in `sample/callout.c`.
 
 (New feature as of Oniguruma 6.8.)
 
@@ -936,7 +936,7 @@ _Set in: Python_
 
 (New feature as of Oniguruma 6.9.7)
 
-### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CLI)`)
+### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CIL)`)
 
 _Set in: Oniguruma_
 
@@ -947,6 +947,14 @@ _Set in: Oniguruma_
 _Set in: Grep, PosixBasic_
 
 (New feature as of Oniguruma 6.9.9)
+
+### 15. ONIG_SYN_ESC_P_WITH_ONE_CHAR_PROP (enable `\pL` etc..)
+
+_Set in: Oniguruma, Perl_NG, Perl_
+
+Unicode property \pC, \pL, \pM, \pN, \pP, \pS, \pZ
+
+(New feature as of Oniguruma 6.9.11)
 
 ### 20. ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC (add `\n` to `[^...]`)
 
@@ -1014,8 +1022,7 @@ _Set in: Perl_NG, Perl, Java_
 
 _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, GnuRegex, PosixExtended_
 
-Not currently used, and does nothing.  (But still set in several syntaxes for some
-reason.)
+Not currently used, and does nothing.  (But still set in several syntaxes for some reason.)
 
 ----------
 
@@ -1025,7 +1032,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Group One Flags (op)
 
-| ID    | Option                                     | Onig  | Pythn | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | ASIS  |
+| ID    | Option                                     | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ------------------------------------------ | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_OP_VARIABLE_META_CHARACTERS`     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 |  1    | `ONIG_SYN_OP_DOT_ANYCHAR`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     |
@@ -1062,7 +1069,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Group Two Flags (op2)
 
-| ID    | Option                                         | Onig  | Pythn | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | ASIS  |
+| ID    | Option                                         | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ---------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_OP2_ESC_CAPITAL_Q_QUOTE`             | -     | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 |  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`              | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     |
@@ -1096,9 +1103,9 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 30    | `ONIG_SYN_OP2_OPTION_ONIGURUMA`                | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 | 31    | `ONIG_SYN_OP2_QMARK_CAPITAL_P_NAME`            | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 
-### Syntax Flags (syn)
+### Syntax Flags (behavior)
 
-| ID    | Option                                               | Onig  | Pythn | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | ASIS  |
+| ID    | Option                                               | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ---------------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
 |  1    | `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
@@ -1115,6 +1122,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 12    | `ONIG_SYN_PYTHON`                                    | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 | 13    | `ONIG_SYN_WHOLE_OPTIONS`                             | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 | 14    | `ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP`              | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | Yes   | -     |
+| 15    | `ONIG_SYN_ESC_P_WITH_ONE_CHAR_PROP`                  | Yes   | -     | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`                | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
 | 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                    | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
 | 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                   | -     | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
