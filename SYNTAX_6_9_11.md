@@ -454,7 +454,7 @@ controls precedence but which does _not_ capture its contents.
 
 _Set in: Python, Perl_NG, Perl, Java_
 
-Enables support of regex options. (i,m,s,x)
+Enables support of regex options. (`i`,`m`,`s`,`x`)
 The supported toggle-able options for this flag are:
 
   - `i` - Case-insensitivity
@@ -467,7 +467,7 @@ The supported toggle-able options for this flag are:
 
 _Set in: Ruby_
 
-Enables support of regex options. (i,m,x)
+Enables support of regex options. (`i`,`m`,`x`)
 The supported toggle-able options for this flag are:
 
   - `i` - Case-insensitivity
@@ -797,7 +797,7 @@ Full documentation for this advanced feature can be found in the Oniguruma
 
 _Set in: Oniguruma_
 
-Enables support of regex options. (i,m,x,W,S,D,P,y)
+Enables support of regex options. (`i`,`m`,`x`,`W`,`S`,`D`,`P`,`y`)
 
 (New feature as of Oniguruma 6.9.2)
 
@@ -807,7 +807,7 @@ Enables support of regex options. (i,m,x,W,S,D,P,y)
   - `W` - ASCII only word.
   - `D` - ASCII only digit.
   - `S` - ASCII only space.
-  - `P` - ASCII only POSIX properties. (includes W,D,S)
+  - `P` - ASCII only POSIX properties. (includes `W`,`D`,`S`)
 
 
 ### 31. ONIG_SYN_OP2_QMARK_CAPITAL_P_NAME (enable `(?P<name>...)` and `(?P=name)`)
@@ -952,7 +952,7 @@ _Set in: Grep, PosixBasic_
 
 _Set in: Oniguruma, Perl_NG, Perl_
 
-Unicode property \pC, \pL, \pM, \pN, \pP, \pS, \pZ
+Unicode property `\pC`, `\pL`, `\pM`, `\pN`, `\pP`, `\pS`, `\pZ`
 
 (New feature as of Oniguruma 6.9.11)
 
