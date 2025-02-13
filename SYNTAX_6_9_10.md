@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.10 (2024/12/21)_
+_Documented for Oniguruma 6.9.10 (2025/02/13)_
 
 
 ----------
@@ -454,7 +454,7 @@ controls precedence but which does _not_ capture its contents.
 
 _Set in: Python, Perl_NG, Perl, Java_
 
-Enables support of regex options. (i,m,s,x)
+Enables support of regex options. (`i`,`m`,`s`,`x`)
 The supported toggle-able options for this flag are:
 
   - `i` - Case-insensitivity
@@ -467,7 +467,7 @@ The supported toggle-able options for this flag are:
 
 _Set in: Ruby_
 
-Enables support of regex options. (i,m,x)
+Enables support of regex options. (`i`,`m`,`x`)
 The supported toggle-able options for this flag are:
 
   - `i` - Case-insensitivity
@@ -647,7 +647,7 @@ characters in `[0-9a-fA-F]`.
 
 ### 20. ONIG_SYN_OP2_INEFFECTIVE_ESCAPE (disable `\`)
 
-_Set in: ASIS_
+_Set in: As-is_
 
 If set, this disables all escape codes, shorthands, and metacharacters that start
 with `\` (or whatever the configured escape character is), allowing `\` to be treated
@@ -772,7 +772,7 @@ function set in `onig_set_progress_callout()` will be invoked, and be able to pe
 custom computation during the pattern match (and during backtracking).
 
 Full documentation for this advanced feature can be found in the Oniguruma
-`docs/CALLOUT.md` file, with an example in `samples/callout.c`.
+`/doc/` folder, with an example in `sample/callout.c`.
 
 (New feature as of Oniguruma 6.8.)
 
@@ -788,7 +788,7 @@ function set in `onig_set_callout_of_name()` will be invoked, passing the given 
 during backtracking).
 
 Full documentation for this advanced feature can be found in the Oniguruma
-`docs/CALLOUT.md` file, with an example in `samples/callout.c`.
+`/doc/` folder, with an example in `sample/callout.c`.
 
 (New feature as of Oniguruma 6.8.)
 
@@ -797,7 +797,7 @@ Full documentation for this advanced feature can be found in the Oniguruma
 
 _Set in: Oniguruma_
 
-Enables support of regex options. (i,m,x,W,S,D,P,y)
+Enables support of regex options. (`i`,`m`,`x`,`W`,`S`,`D`,`P`,`y`)
 
 (New feature as of Oniguruma 6.9.2)
 
@@ -807,7 +807,7 @@ Enables support of regex options. (i,m,x,W,S,D,P,y)
   - `W` - ASCII only word.
   - `D` - ASCII only digit.
   - `S` - ASCII only space.
-  - `P` - ASCII only POSIX properties. (includes W,D,S)
+  - `P` - ASCII only POSIX properties. (includes `W`,`D`,`S`)
 
 
 ### 31. ONIG_SYN_OP2_QMARK_CAPITAL_P_NAME (enable `(?P<name>...)` and `(?P=name)`)
@@ -819,7 +819,7 @@ _Set in: Python_
 ----------
 
 
-## Syntax Flags (syn)
+## Syntax Flags (behavior)
 
 
 This group contains rules to handle corner cases and constructs that are errors in
@@ -936,7 +936,7 @@ _Set in: Python_
 
 (New feature as of Oniguruma 6.9.7)
 
-### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CLI)`)
+### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CIL)`)
 
 _Set in: Oniguruma_
 
@@ -1014,8 +1014,7 @@ _Set in: Perl_NG, Perl, Java_
 
 _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, GnuRegex, PosixExtended_
 
-Not currently used, and does nothing.  (But still set in several syntaxes for some
-reason.)
+Not currently used, and does nothing.  (But still set in several syntaxes for some reason.)
 
 ----------
 
@@ -1025,7 +1024,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Group One Flags (op)
 
-| ID    | Option                                     | Onig  | Pythn | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | ASIS  |
+| ID    | Option                                     | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ------------------------------------------ | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_OP_VARIABLE_META_CHARACTERS`     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 |  1    | `ONIG_SYN_OP_DOT_ANYCHAR`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     |
@@ -1062,7 +1061,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Group Two Flags (op2)
 
-| ID    | Option                                         | Onig  | Pythn | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | ASIS  |
+| ID    | Option                                         | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ---------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_OP2_ESC_CAPITAL_Q_QUOTE`             | -     | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 |  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`              | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     |
@@ -1096,9 +1095,9 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 30    | `ONIG_SYN_OP2_OPTION_ONIGURUMA`                | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 | 31    | `ONIG_SYN_OP2_QMARK_CAPITAL_P_NAME`            | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 
-### Syntax Flags (syn)
+### Syntax Flags (behavior)
 
-| ID    | Option                                               | Onig  | Pythn | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | ASIS  |
+| ID    | Option                                               | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ---------------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
 |  1    | `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
