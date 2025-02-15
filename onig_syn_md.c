@@ -12,7 +12,7 @@
 #include <string.h>
 #include "oniguruma.h"
 
-#define ONIG_SYN_MD_VERSION_INT           (00003)
+#define ONIG_SYN_MD_VERSION_INT           (00004)
 #define TOTAL_NUM_OF_BITS                 (32)
 
 #define PRINT_SEPARATOR                   (printf("===================================================\n"))
@@ -37,7 +37,7 @@
 #define PRINT_VERSION_INFO
 #define PRINT_SET_IN_INFO
 #define PRINT_FLAG_TABLE
-#define PRINT_SYNTAX_TABLE
+#define PRINT_SYNTAX_OPTION_VALUE_TABLE
 #define WARN_UNDEFINED_FLAG_IS_USED
 /*  #define PRINT_DEBUG_INFO  */
 
@@ -69,9 +69,9 @@ static OnigSyntaxType OnigSyntaxYourOwn;
 #define ONIG_SYNTAX_YOUROWN    (&OnigSyntaxYourOwn)
 
 static OnigSyntaxType OnigSyntaxYourOwn = {
-    0xf0f0f0f0      /*  Group One Flags (op)   */
-  , 0xffff0000      /*  Group Two Flags (op2)  */
-  , 0x0000ffff      /*  Syntax Flags    (behavior)  */
+    0xffffffff      /*  Group One Flags (op)   */
+  , 0x00000000      /*  Group Two Flags (op2)  */
+  , 0x0f0f0f0f      /*  Syntax Flags    (behavior)  */
   , ONIG_OPTION_NONE
   ,
   {
@@ -95,7 +95,6 @@ typedef struct {
     char *set_in;
 } syn_data;
 
-
 static syn_data  syn_data_list[] =
 {
    /*  INPUT_SYNTAX(syn, abbrev, set_in)  ===>   { (syn), (#syn), (abbrev), (set_in) }  */
@@ -112,7 +111,6 @@ static syn_data  syn_data_list[] =
   , INPUT_SYNTAX( ONIG_SYNTAX_RUBY           , "Ruby" , "Ruby" )
   , INPUT_SYNTAX( ONIG_SYNTAX_PYTHON         , "Pyth" , "Python")
   , INPUT_SYNTAX( ONIG_SYNTAX_ONIGURUMA      , "Onig" , "Oniguruma" )
-
 #ifdef USE_YOUR_OWN_SYNTAX
   , INPUT_SYNTAX( ONIG_SYNTAX_YOUROWN        , "Your" , "YourOwn" )
 #endif
@@ -165,10 +163,8 @@ typedef struct {
 #if NOW_MODE == 1
 static flag_data  flag_data_list[] =
 {
-
-/*  The following are no need to sort them in bit order.  */
-
-/*  INPUT_FLAG(arg)  ===>    { (arg), (#arg) }   */
+  /*  The following are no need to sort them in bit order.  */
+  /*  INPUT_FLAG(arg)  ===>    { (arg), (#arg) }            */
 
     INPUT_FLAG( ONIG_SYN_OP_VARIABLE_META_CHARACTERS )
   , INPUT_FLAG( ONIG_SYN_OP_DOT_ANYCHAR )
@@ -377,7 +373,7 @@ print_flag_data_list()
 /************************************** flag data *******************************************/
 
 
-/************************************** print table *****************************************/
+/*********************************** print flags table **************************************/
 static void
 print_flag_table_head()
 {
@@ -428,7 +424,7 @@ print_flag_table_body_one_line( int shift_num )
     name_chars = printf("`%s`", flag_data_list[elem].name);
   }
 
-  for ( i=0; i < (flag_name_max_len - name_chars + 5); i++) {
+  for (i = 0; i < (flag_name_max_len - name_chars + 5); i++) {
     printf(" ");
   }
   printf("|");
@@ -465,7 +461,7 @@ print_flag_table_body()
   }
   return ;
 }
-/************************************** print table *****************************************/
+/*********************************** print flags table **************************************/
 
 
 /************************************* print Set_in *****************************************/
@@ -526,11 +522,66 @@ print_set_in()
 /************************************* print Set_in *****************************************/
 
 
-/****************************** print Syntax option value ***********************************/
+/**************************** print Syntax option value table *******************************/
+static void
+print_syn_option_value_table_head()
+{
+  int i;
+  char* syn_name = "Syntax name";
+  
+  printf("\n### Syntax option values\n\n");
+  printf("| %s", syn_name);
+  
+  for (i = 0; i < (syntax_name_max_len - strlen(syn_name) + 3); i++) {
+    printf(" ");
+  }
+  
+  printf("| Group One Flags (op) | Group Two Flags (op2) | Syntax Flags (behavior) |\n");
+  printf("| ");
+  
+  for (i = 0; i < (syntax_name_max_len + 2); i++) {
+    printf("-");
+  }
+  
+  printf(" | -------------------- | --------------------- | ----------------------- |\n");
+  return ;
+}
 
-               /* To do : Print the numeric value of syntax options in a table */
+static void
+print_syn_option_value_table_body_one_line(int y)
+{
+  int i;
+  printf("| ");
+  printf("`%s`", syn_data_list[y].name);
+  
+  for (i = 0; i < (syntax_name_max_len - strlen(syn_data_list[y].name) ); i++) {
+    printf(" ");
+  }
+  
+  printf(" |");
+  printf("     `0x%08x`     |", syn_data_list[y].syn->op);
+  printf("     `0x%08x`      |", syn_data_list[y].syn->op2);
+  printf("      `0x%08x`       |\n", syn_data_list[y].syn->behavior);
+  return ;
+}
 
-/****************************** print Syntax option value ***********************************/
+static void
+print_syn_option_value_table_body()
+{
+  int y ;
+#ifdef PRINT_SYNTAX_FORWARD_ORDER
+  for (y = 0; y < num_of_syntax_types; y++) {
+#else
+  for (y = num_of_syntax_types -1; y > -1; y--) {
+#endif
+    print_syn_option_value_table_body_one_line(y);
+  }
+  
+  printf("\n(Note) Do not use numbers for the settings. Use the flag name to set it.\n\n");
+  
+  return ;
+}
+/**************************** print Syntax option value table *******************************/
 
 
 /**************************************    main()   *****************************************/
@@ -606,11 +657,9 @@ main(int argc, char* argv[])
   
   syntax_name_max_len = syntax_name_max_len_int();
 
-#ifdef PRINT_SYNTAX_TABLE
-  /*
-  print_syn_table_head();
-  print_syn_table_body();
-   */
+#ifdef PRINT_SYNTAX_OPTION_VALUE_TABLE
+  print_syn_option_value_table_head();
+  print_syn_option_value_table_body();
 #endif  
 
 #ifdef PRINT_SET_IN_INFO
@@ -635,6 +684,8 @@ main(int argc, char* argv[])
     print_set_in();
     print_flag_table_head();
     print_flag_table_body();
+    print_syn_option_value_table_head();
+    print_syn_option_value_table_body();
     warn_undefined_flag_is_used();
   }
 
