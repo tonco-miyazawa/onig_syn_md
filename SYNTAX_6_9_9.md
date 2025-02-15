@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.10 (2025/02/15)_
+_Documented for Oniguruma 6.9.9 (2025/02/15)_
 
 
 ----------
@@ -352,7 +352,7 @@ and not any other form.)
 
 ### 24. ONIG_SYN_OP_POSIX_BRACKET (enable POSIX `[:xxxx:]`)
 
-_Set in: Oniguruma, Ruby, Perl_NG, Perl, GnuRegex, Grep, PosixExtended, PosixBasic_
+_Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, GnuRegex, Grep, PosixExtended, PosixBasic_
 
 Enables support for the POSIX `[:xxxx:]` character classes, like `[:alpha:]` and `[:digit:]`.
 The supported POSIX character classes are `alnum`, `alpha`, `blank`, `cntrl`, `digit`,
@@ -444,7 +444,7 @@ longer be treated as metacharacters, and instead will be matched as literal
 
 ### 1. ONIG_SYN_OP2_QMARK_GROUP_EFFECT (enable `(?...)`)
 
-_Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, Emacs_
+_Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java_
 
 Enables support for the fairly-common `(?...)` grouping operator, which
 controls precedence but which does _not_ capture its contents.
@@ -1004,12 +1004,6 @@ _Set in: Oniguruma_
 
 If this flag is set, then invalid code points at the end of range in character class are allowed.
 
-### 27. ONIG_SYN_ALLOW_CHAR_TYPE_FOLLOWED_BY_MINUS_IN_CC (allow `[\w-%]` to mean `[\w\-%]`) 
-
-_Set in: Perl_NG, Perl, Java_
-
-(New feature as of Oniguruma 6.9.10)
-
 ### 31. ONIG_SYN_CONTEXT_INDEP_ANCHORS
 
 _Set in: Oniguruma, Python, Ruby, Perl_NG, Perl, Java, GnuRegex, PosixExtended_
@@ -1050,7 +1044,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 21    | `ONIG_SYN_OP_ESC_S_WHITE_SPACE`            | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
 | 22    | `ONIG_SYN_OP_ESC_D_DIGIT`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
 | 23    | `ONIG_SYN_OP_LINE_ANCHOR`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     |
-| 24    | `ONIG_SYN_OP_POSIX_BRACKET`                | Yes   | -     | Yes   | Yes   | Yes   | -     | Yes   | Yes   | -     | Yes   | Yes   | -     |
+| 24    | `ONIG_SYN_OP_POSIX_BRACKET`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | Yes   | Yes   | -     |
 | 25    | `ONIG_SYN_OP_QMARK_NON_GREEDY`             | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 | 26    | `ONIG_SYN_OP_ESC_CONTROL_CHARS`            | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | Yes   | Yes   | -     |
 | 27    | `ONIG_SYN_OP_ESC_C_CONTROL`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
@@ -1064,7 +1058,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | ID    | Option                                         | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
 | ----- | ---------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
 |  0    | `ONIG_SYN_OP2_ESC_CAPITAL_Q_QUOTE`             | -     | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-|  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`              | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     |
+|  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`              | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 |  2    | `ONIG_SYN_OP2_OPTION_PERL`                     | -     | Yes   | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 |  3    | `ONIG_SYN_OP2_OPTION_RUBY`                     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 |  4    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_REPEAT`          | Yes   | -     | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
@@ -1097,46 +1091,45 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Syntax Flags (behavior)
 
-| ID    | Option                                               | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
-| ----- | ---------------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-|  0    | `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
-|  1    | `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
-|  2    | `ONIG_SYN_ALLOW_UNMATCHED_CLOSE_SUBEXP`              | -     | -     | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     |
-|  3    | `ONIG_SYN_ALLOW_INVALID_INTERVAL`                    | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
-|  4    | `ONIG_SYN_ALLOW_INTERVAL_LOW_ABBREV`                 | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-|  5    | `ONIG_SYN_STRICT_CHECK_BACKREF`                      | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-|  6    | `ONIG_SYN_DIFFERENT_LEN_ALT_LOOK_BEHIND`             | Yes   | -     | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-|  7    | `ONIG_SYN_CAPTURE_ONLY_NAMED_GROUP`                  | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-|  8    | `ONIG_SYN_ALLOW_MULTIPLEX_DEFINITION_NAME`           | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-|  9    | `ONIG_SYN_FIXED_INTERVAL_IS_GREEDY_ONLY`             | Yes   | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 10    | `ONIG_SYN_ISOLATED_OPTION_CONTINUE_BRANCH`           | -     | Yes   | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-| 11    | `ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND`                  | Yes   | -     | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-| 12    | `ONIG_SYN_PYTHON`                                    | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 13    | `ONIG_SYN_WHOLE_OPTIONS`                             | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 14    | `ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP`              | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | Yes   | -     |
-| 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`                | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
-| 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                    | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
-| 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                   | -     | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
-| 23    | `ONIG_SYN_ALLOW_DOUBLE_RANGE_OP_IN_CC`               | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
-| 24    | `ONIG_SYN_WARN_CC_OP_NOT_ESCAPED`                    | Yes   | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 25    | `ONIG_SYN_WARN_REDUNDANT_NESTED_REPEAT`              | Yes   | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 26    | `ONIG_SYN_ALLOW_INVALID_CODE_END_OF_RANGE_IN_CC`     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 27    | `ONIG_SYN_ALLOW_CHAR_TYPE_FOLLOWED_BY_MINUS_IN_CC`   | -     | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-| 31    | `ONIG_SYN_CONTEXT_INDEP_ANCHORS`                     | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+| ID    | Option                                             | Onig  | Pyth  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
+| ----- | -------------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+|  0    | `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+|  1    | `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS`              | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+|  2    | `ONIG_SYN_ALLOW_UNMATCHED_CLOSE_SUBEXP`            | -     | -     | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     |
+|  3    | `ONIG_SYN_ALLOW_INVALID_INTERVAL`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
+|  4    | `ONIG_SYN_ALLOW_INTERVAL_LOW_ABBREV`               | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+|  5    | `ONIG_SYN_STRICT_CHECK_BACKREF`                    | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+|  6    | `ONIG_SYN_DIFFERENT_LEN_ALT_LOOK_BEHIND`           | Yes   | -     | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+|  7    | `ONIG_SYN_CAPTURE_ONLY_NAMED_GROUP`                | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+|  8    | `ONIG_SYN_ALLOW_MULTIPLEX_DEFINITION_NAME`         | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+|  9    | `ONIG_SYN_FIXED_INTERVAL_IS_GREEDY_ONLY`           | Yes   | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 10    | `ONIG_SYN_ISOLATED_OPTION_CONTINUE_BRANCH`         | -     | Yes   | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
+| 11    | `ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND`                | Yes   | -     | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+| 12    | `ONIG_SYN_PYTHON`                                  | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 13    | `ONIG_SYN_WHOLE_OPTIONS`                           | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 14    | `ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP`            | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | Yes   | -     |
+| 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`              | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
+| 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
+| 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                 | -     | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
+| 23    | `ONIG_SYN_ALLOW_DOUBLE_RANGE_OP_IN_CC`             | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+| 24    | `ONIG_SYN_WARN_CC_OP_NOT_ESCAPED`                  | Yes   | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 25    | `ONIG_SYN_WARN_REDUNDANT_NESTED_REPEAT`            | Yes   | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 26    | `ONIG_SYN_ALLOW_INVALID_CODE_END_OF_RANGE_IN_CC`   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 31    | `ONIG_SYN_CONTEXT_INDEP_ANCHORS`                   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
 
 ### Syntax option values
 
 | Syntax name                  | Group One Flags (op) | Group Two Flags (op2) | Syntax Flags (behavior) |
 | ---------------------------- | -------------------- | --------------------- | ----------------------- |
 | `ONIG_SYNTAX_ONIGURUMA`      |     `0xfff7d556`     |     `0x77eb7bd2`      |      `0x87a02bdb`       |
-| `ONIG_SYNTAX_PYTHON`         |     `0x3ef7d556`     |     `0xa0636006`      |      `0x80a0141b`       |
+| `ONIG_SYNTAX_PYTHON`         |     `0x3ff7d556`     |     `0xa0636006`      |      `0x80a0141b`       |
 | `ONIG_SYNTAX_RUBY`           |     `0xfff7d556`     |     `0x06eb7bda`      |      `0x83a003db`       |
-| `ONIG_SYNTAX_PERL_NG`        |     `0xfff7d556`     |     `0x3fe303b7`      |      `0x88a0058b`       |
-| `ONIG_SYNTAX_PERL`           |     `0xfff7d556`     |     `0x37e30037`      |      `0x88a0040b`       |
-| `ONIG_SYNTAX_JAVA`           |     `0x3ef7d556`     |     `0x00016077`      |      `0x88a00c4b`       |
+| `ONIG_SYNTAX_PERL_NG`        |     `0xfff7d556`     |     `0x3fe303b7`      |      `0x80a0058b`       |
+| `ONIG_SYNTAX_PERL`           |     `0xfff7d556`     |     `0x37e30037`      |      `0x80a0040b`       |
+| `ONIG_SYNTAX_JAVA`           |     `0x3ff7d556`     |     `0x00016077`      |      `0x80a00c4b`       |
 | `ONIG_SYNTAX_GNU_REGEX`      |     `0x01ffd556`     |     `0x00000000`      |      `0x80a0000b`       |
 | `ONIG_SYNTAX_GREP`           |     `0x019f2aa6`     |     `0x00000000`      |      `0x00504000`       |
-| `ONIG_SYNTAX_EMACS`          |     `0x04832a56`     |     `0x00008002`      |      `0x00400000`       |
+| `ONIG_SYNTAX_EMACS`          |     `0x04832a56`     |     `0x00008000`      |      `0x00400000`       |
 | `ONIG_SYNTAX_POSIX_EXTENDED` |     `0x05831556`     |     `0x00000000`      |      `0x80800007`       |
 | `ONIG_SYNTAX_POSIX_BASIC`    |     `0x05832206`     |     `0x00000000`      |      `0x00004000`       |
 | `ONIG_SYNTAX_ASIS`           |     `0x00000000`     |     `0x00100000`      |      `0x00000000`       |
