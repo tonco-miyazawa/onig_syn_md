@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.9 (2025/02/16)_
+_Documented for Oniguruma 6.9.8 (2025/02/16)_
 
 
 ----------
@@ -942,12 +942,6 @@ _Set in: Oniguruma_
 
 (New feature as of Oniguruma 6.9.8)
 
-### 14. ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP (enable `\(^abc$\)`)
-
-_Set in: Grep, PosixBasic_
-
-(New feature as of Oniguruma 6.9.9)
-
 ### 20. ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC (add `\n` to `[^...]`)
 
 _Set in: Grep_
@@ -1107,7 +1101,6 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 11    | `ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND`                | Yes   | -     | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
 | 12    | `ONIG_SYN_PYTHON`                                  | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 | 13    | `ONIG_SYN_WHOLE_OPTIONS`                           | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 14    | `ONIG_SYN_BRE_ANCHOR_AT_EDGE_OF_SUBEXP`            | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | Yes   | -     |
 | 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`              | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
 | 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
 | 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                 | -     | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
@@ -1128,10 +1121,10 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30037` | `0x80a0040b` |
 | `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a00c4b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
-| `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00504000` |
+| `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
 | `ONIG_SYNTAX_EMACS`          | `0x04832a56` | `0x00008000` | `0x00400000` |
 | `ONIG_SYNTAX_POSIX_EXTENDED` | `0x05831556` | `0x00000000` | `0x80800007` |
-| `ONIG_SYNTAX_POSIX_BASIC`    | `0x05832206` | `0x00000000` | `0x00004000` |
+| `ONIG_SYNTAX_POSIX_BASIC`    | `0x05832206` | `0x00000000` | `0x00000000` |
 | `ONIG_SYNTAX_ASIS`           | `0x00000000` | `0x00100000` | `0x00000000` |
 
 (Note) Do not use numbers for the settings. Use the flag name to set it.
