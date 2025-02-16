@@ -12,7 +12,7 @@
 #include <string.h>
 #include "oniguruma.h"
 
-#define ONIG_SYN_MD_VERSION_INT           (00004)
+#define ONIG_SYN_MD_VERSION_INT           (00005)
 #define TOTAL_NUM_OF_BITS                 (32)
 
 #define PRINT_SEPARATOR                   (printf("===================================================\n"))
@@ -527,7 +527,7 @@ static void
 print_syn_option_value_table_head()
 {
   int i;
-  char* syn_name = "Syntax name";
+  char* syn_name = "          Syntax";
   
   printf("\n### Syntax option values\n\n");
   printf("| %s", syn_name);
@@ -536,14 +536,14 @@ print_syn_option_value_table_head()
     printf(" ");
   }
   
-  printf("| Group One Flags (op) | Group Two Flags (op2) | Syntax Flags (behavior) |\n");
+  printf("|     (op)     |    (op2)     |  (behavior)  |\n");
   printf("| ");
   
   for (i = 0; i < (syntax_name_max_len + 2); i++) {
     printf("-");
   }
   
-  printf(" | -------------------- | --------------------- | ----------------------- |\n");
+  printf(" | ------------ | ------------ | ------------ |\n");
   return ;
 }
 
@@ -559,9 +559,9 @@ print_syn_option_value_table_body_one_line(int y)
   }
   
   printf(" |");
-  printf("     `0x%08x`     |", syn_data_list[y].syn->op);
-  printf("     `0x%08x`      |", syn_data_list[y].syn->op2);
-  printf("      `0x%08x`       |\n", syn_data_list[y].syn->behavior);
+  printf(" `0x%08x` |", syn_data_list[y].syn->op);
+  printf(" `0x%08x` |", syn_data_list[y].syn->op2);
+  printf(" `0x%08x` |\n", syn_data_list[y].syn->behavior);
   return ;
 }
 
