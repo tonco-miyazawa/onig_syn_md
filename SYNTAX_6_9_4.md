@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.5 revised 1 (2025/02/16)_
+_Documented for Oniguruma 6.9.4 (2025/02/16)_
 
 
 ----------
@@ -911,19 +911,6 @@ If this flag is set, then intervals of a fixed size will ignore a lazy (non-gree
 little as possible" is meaningless for a fixed-size interval.  If this flag is clear,
 then `r{n}?` will mean the same as `r{n}`, and the useless `?` will be discarded.
 
-### 10. ONIG_SYN_ISOLATED_OPTION_CONTINUE_BRANCH (`..(?i)..`)
-
-_Set in: Perl_NG, Perl, Java_
-
-If this flag is set, then an isolated option doesn't break the branch and affects until the end of the group (or end of the pattern).
-If this flag is not set, then an isolated option is interpreted as the starting point of a new branch. `/a(?i)b|c/` ==> `/a(?i:b|c)/`
-
-### 11. ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND (`(?<=...a+...)`)
-
-_Set in: Oniguruma, Java_
-
-If this flag is set, then a variable length expressions are allowed in look-behind.
-
 ### 20. ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC (add `\n` to `[^...]`)
 
 _Set in: Grep_
@@ -1078,8 +1065,6 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 |  7    | `ONIG_SYN_CAPTURE_ONLY_NAMED_GROUP`                | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
 |  8    | `ONIG_SYN_ALLOW_MULTIPLEX_DEFINITION_NAME`         | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
 |  9    | `ONIG_SYN_FIXED_INTERVAL_IS_GREEDY_ONLY`           | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 10    | `ONIG_SYN_ISOLATED_OPTION_CONTINUE_BRANCH`         | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-| 11    | `ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND`                | Yes   | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
 | 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`              | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
 | 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
 | 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                 | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
@@ -1093,11 +1078,11 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x87a00bdb` |
+| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x87a003db` |
 | `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x06eb7bda` | `0x83a003db` |
-| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe303b7` | `0x80a0058b` |
-| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30037` | `0x80a0040b` |
-| `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a00c4b` |
+| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe303b7` | `0x80a0018b` |
+| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30037` | `0x80a0000b` |
+| `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a0004b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
 | `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
 | `ONIG_SYNTAX_EMACS`          | `0x04832a56` | `0x00008000` | `0x00400000` |
