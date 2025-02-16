@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.8 (2025/02/16)_
+_Documented for Oniguruma 6.9.7 revised 1 (2025/02/16)_
 
 
 ----------
@@ -936,12 +936,6 @@ _Set in: Python_
 
 (New feature as of Oniguruma 6.9.7)
 
-### 13. ONIG_SYN_WHOLE_OPTIONS (enable options `(?CIL)`)
-
-_Set in: Oniguruma_
-
-(New feature as of Oniguruma 6.9.8)
-
 ### 20. ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC (add `\n` to `[^...]`)
 
 _Set in: Grep_
@@ -1100,7 +1094,6 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 10    | `ONIG_SYN_ISOLATED_OPTION_CONTINUE_BRANCH`         | -     | Yes   | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 | 11    | `ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND`                | Yes   | -     | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
 | 12    | `ONIG_SYN_PYTHON`                                  | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 13    | `ONIG_SYN_WHOLE_OPTIONS`                           | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 | 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`              | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
 | 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
 | 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                 | -     | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
@@ -1114,7 +1107,7 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x87a02bdb` |
+| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x87a00bdb` |
 | `ONIG_SYNTAX_PYTHON`         | `0x3ff7d556` | `0xa0636006` | `0x80a0141b` |
 | `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x06eb7bda` | `0x83a003db` |
 | `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe303b7` | `0x80a0058b` |
