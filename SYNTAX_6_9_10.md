@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.10 (2025/02/15)_
+_Documented for Oniguruma 6.9.10 (2025/02/16)_
 
 
 ----------
@@ -1126,19 +1126,19 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Syntax option values
 
-| Syntax name                  | Group One Flags (op) | Group Two Flags (op2) | Syntax Flags (behavior) |
-| ---------------------------- | -------------------- | --------------------- | ----------------------- |
-| `ONIG_SYNTAX_ONIGURUMA`      |     `0xfff7d556`     |     `0x77eb7bd2`      |      `0x87a02bdb`       |
-| `ONIG_SYNTAX_PYTHON`         |     `0x3ef7d556`     |     `0xa0636006`      |      `0x80a0141b`       |
-| `ONIG_SYNTAX_RUBY`           |     `0xfff7d556`     |     `0x06eb7bda`      |      `0x83a003db`       |
-| `ONIG_SYNTAX_PERL_NG`        |     `0xfff7d556`     |     `0x3fe303b7`      |      `0x88a0058b`       |
-| `ONIG_SYNTAX_PERL`           |     `0xfff7d556`     |     `0x37e30037`      |      `0x88a0040b`       |
-| `ONIG_SYNTAX_JAVA`           |     `0x3ef7d556`     |     `0x00016077`      |      `0x88a00c4b`       |
-| `ONIG_SYNTAX_GNU_REGEX`      |     `0x01ffd556`     |     `0x00000000`      |      `0x80a0000b`       |
-| `ONIG_SYNTAX_GREP`           |     `0x019f2aa6`     |     `0x00000000`      |      `0x00504000`       |
-| `ONIG_SYNTAX_EMACS`          |     `0x04832a56`     |     `0x00008002`      |      `0x00400000`       |
-| `ONIG_SYNTAX_POSIX_EXTENDED` |     `0x05831556`     |     `0x00000000`      |      `0x80800007`       |
-| `ONIG_SYNTAX_POSIX_BASIC`    |     `0x05832206`     |     `0x00000000`      |      `0x00004000`       |
-| `ONIG_SYNTAX_ASIS`           |     `0x00000000`     |     `0x00100000`      |      `0x00000000`       |
+|           Syntax             |     (op)     |    (op2)     |  (behavior)  |
+| ---------------------------- | ------------ | ------------ | ------------ |
+| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x87a02bdb` |
+| `ONIG_SYNTAX_PYTHON`         | `0x3ef7d556` | `0xa0636006` | `0x80a0141b` |
+| `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x06eb7bda` | `0x83a003db` |
+| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe303b7` | `0x88a0058b` |
+| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30037` | `0x88a0040b` |
+| `ONIG_SYNTAX_JAVA`           | `0x3ef7d556` | `0x00016077` | `0x88a00c4b` |
+| `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
+| `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00504000` |
+| `ONIG_SYNTAX_EMACS`          | `0x04832a56` | `0x00008002` | `0x00400000` |
+| `ONIG_SYNTAX_POSIX_EXTENDED` | `0x05831556` | `0x00000000` | `0x80800007` |
+| `ONIG_SYNTAX_POSIX_BASIC`    | `0x05832206` | `0x00000000` | `0x00004000` |
+| `ONIG_SYNTAX_ASIS`           | `0x00000000` | `0x00100000` | `0x00000000` |
 
 (Note) Do not use numbers for the settings. Use the flag name to set it.
