@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.2 (2025/02/17)_
+_Documented for Oniguruma 6.9.1 (2025/02/17)_
 
 
 ----------
@@ -465,7 +465,7 @@ The supported toggle-able options for this flag are:
 
 ### 3. ONIG_SYN_OP2_OPTION_RUBY (enable options `(?imx)` and `(?-imx)`)
 
-_Set in: Ruby_
+_Set in: Oniguruma, Ruby_
 
 Enables support of regex options. (`i`,`m`,`x`)
 The supported toggle-able options for this flag are:
@@ -477,7 +477,7 @@ The supported toggle-able options for this flag are:
 
 ### 4. ONIG_SYN_OP2_PLUS_POSSESSIVE_REPEAT (enable `r?+`, `r*+`, and `r++`)
 
-_Set in: Oniguruma, Ruby, Perl_NG, Perl, Java_
+_Set in: Oniguruma, Ruby, Java_
 
 Enables support for the _possessive_ quantifiers `?+`, `*+`, and `++`, which
 work similarly to `?` and `*` and `+`, respectively, but which do not backtrack
@@ -488,7 +488,7 @@ extent if subsequent parts of the pattern fail to match.
 
 ### 5. ONIG_SYN_OP2_PLUS_POSSESSIVE_INTERVAL (enable `r{n,m}+`)
 
-_Set in: Perl_NG, Perl, Java_
+_Set in: Java_
 
 Enables support for the _possessive_ quantifier `{n,m}+`, which
 works similarly to `{n,m}`, but which does not backtrack
@@ -729,7 +729,7 @@ excellent article about it is [available on Medium](https://medium.com/rubyinsid
 (New feature as of Oniguruma 6.5.)
 
 
-### 26. ONIG_SYN_OP2_ESC_X_Y_TEXT_SEGMENT (enable `\X` and `\Y` and `\y`)
+### 26. ONIG_SYN_OP2_ESC_X_Y_GRAPHEME_CLUSTER (enable `\X` and `\Y` and `\y`)
 
 _Set in: Oniguruma, Ruby, Perl_NG, Perl_
 
@@ -791,23 +791,6 @@ Full documentation for this advanced feature can be found in the Oniguruma
 `/doc/` folder, with an example in `sample/callout.c`.
 
 (New feature as of Oniguruma 6.8.)
-
-
-### 30. ONIG_SYN_OP2_OPTION_ONIGURUMA (enable options `(?imxWSDPy)` and `(?-imxWDSP)`)
-
-_Set in: Oniguruma_
-
-Enables support of regex options. (`i`,`m`,`x`,`W`,`S`,`D`,`P`,`y`)
-
-(New feature as of Oniguruma 6.9.2)
-
-  - `i` - Case-insensitivity
-  - `m` - Multi-line mode (`.` can match `\n`)
-  - `x` - Extended pattern (free-formatting: whitespace will ignored)
-  - `W` - ASCII only word.
-  - `D` - ASCII only digit.
-  - `S` - ASCII only space.
-  - `P` - ASCII only POSIX properties. (includes `W`,`D`,`S`)
 
 
 ----------
@@ -1017,9 +1000,9 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 |  0    | `ONIG_SYN_OP2_ESC_CAPITAL_Q_QUOTE`             | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 |  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`              | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 |  2    | `ONIG_SYN_OP2_OPTION_PERL`                     | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-|  3    | `ONIG_SYN_OP2_OPTION_RUBY`                     | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-|  4    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_REPEAT`          | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-|  5    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_INTERVAL`        | -     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
+|  3    | `ONIG_SYN_OP2_OPTION_RUBY`                     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+|  4    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_REPEAT`          | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+|  5    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_INTERVAL`        | -     | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
 |  6    | `ONIG_SYN_OP2_CCLASS_SET_OP`                   | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
 |  7    | `ONIG_SYN_OP2_QMARK_LT_NAMED_GROUP`            | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
 |  8    | `ONIG_SYN_OP2_ESC_K_NAMED_BACKREF`             | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
@@ -1039,11 +1022,10 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 23    | `ONIG_SYN_OP2_ESC_CAPITAL_R_GENERAL_NEWLINE`   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 24    | `ONIG_SYN_OP2_ESC_CAPITAL_N_O_SUPER_DOT`       | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 25    | `ONIG_SYN_OP2_QMARK_TILDE_ABSENT_GROUP`        | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 26    | `ONIG_SYN_OP2_ESC_X_Y_TEXT_SEGMENT`            | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
+| 26    | `ONIG_SYN_OP2_ESC_X_Y_GRAPHEME_CLUSTER`        | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 27    | `ONIG_SYN_OP2_QMARK_PERL_SUBEXP_CALL`          | -     | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
 | 28    | `ONIG_SYN_OP2_QMARK_BRACE_CALLOUT_CONTENTS`    | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 29    | `ONIG_SYN_OP2_ASTERISK_CALLOUT_NAME`           | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 30    | `ONIG_SYN_OP2_OPTION_ONIGURUMA`                | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
 
 ### Syntax Flags (behavior)
 
@@ -1071,10 +1053,10 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x83a003db` |
+| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x37eb7bda` | `0x83a003db` |
 | `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x06eb7bda` | `0x83a003db` |
-| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe303b7` | `0x80a0018b` |
-| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30037` | `0x80a0000b` |
+| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe30387` | `0x80a0018b` |
+| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30007` | `0x80a0000b` |
 | `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a0004b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
 | `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
