@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.1 (2025/02/17)_
+_Documented for Oniguruma 6.9.0 (2025/02/17)_
 
 
 ----------
