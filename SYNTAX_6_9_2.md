@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.3 (2025/02/16)_
+_Documented for Oniguruma 6.9.2 (2025/02/17)_
 
 
 ----------
@@ -961,12 +961,6 @@ _Set in: Oniguruma, Ruby_
 If this flag is set, Oniguruma will warn about nested repeat operators those have no meaning, like `(?:a*)+`.
 If this flag is clear, Oniguruma will allow the nested repeat operators without warning about them.
 
-### 26. ONIG_SYN_ALLOW_INVALID_CODE_END_OF_RANGE_IN_CC (allow `[a-\x{7fffffff}]`)
-
-_Set in: Oniguruma_
-
-If this flag is set, then invalid code points at the end of range in character class are allowed.
-
 ### 31. ONIG_SYN_CONTEXT_INDEP_ANCHORS
 
 _Set in: Oniguruma, Ruby, Perl_NG, Perl, Java, GnuRegex, PosixExtended_
@@ -1053,32 +1047,31 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Syntax Flags (behavior)
 
-| ID    | Option                                             | Onig  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
-| ----- | -------------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-|  0    | `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS`                | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
-|  1    | `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS`              | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
-|  2    | `ONIG_SYN_ALLOW_UNMATCHED_CLOSE_SUBEXP`            | -     | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     |
-|  3    | `ONIG_SYN_ALLOW_INVALID_INTERVAL`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
-|  4    | `ONIG_SYN_ALLOW_INTERVAL_LOW_ABBREV`               | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-|  5    | `ONIG_SYN_STRICT_CHECK_BACKREF`                    | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-|  6    | `ONIG_SYN_DIFFERENT_LEN_ALT_LOOK_BEHIND`           | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-|  7    | `ONIG_SYN_CAPTURE_ONLY_NAMED_GROUP`                | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-|  8    | `ONIG_SYN_ALLOW_MULTIPLEX_DEFINITION_NAME`         | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-|  9    | `ONIG_SYN_FIXED_INTERVAL_IS_GREEDY_ONLY`           | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`              | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
-| 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`                  | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
-| 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`                 | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
-| 23    | `ONIG_SYN_ALLOW_DOUBLE_RANGE_OP_IN_CC`             | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
-| 24    | `ONIG_SYN_WARN_CC_OP_NOT_ESCAPED`                  | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 25    | `ONIG_SYN_WARN_REDUNDANT_NESTED_REPEAT`            | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 26    | `ONIG_SYN_ALLOW_INVALID_CODE_END_OF_RANGE_IN_CC`   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 31    | `ONIG_SYN_CONTEXT_INDEP_ANCHORS`                   | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+| ID    | Option                                       | Onig  | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
+| ----- | -------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+|  0    | `ONIG_SYN_CONTEXT_INDEP_REPEAT_OPS`          | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+|  1    | `ONIG_SYN_CONTEXT_INVALID_REPEAT_OPS`        | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+|  2    | `ONIG_SYN_ALLOW_UNMATCHED_CLOSE_SUBEXP`      | -     | -     | -     | -     | -     | -     | -     | -     | Yes   | -     | -     |
+|  3    | `ONIG_SYN_ALLOW_INVALID_INTERVAL`            | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
+|  4    | `ONIG_SYN_ALLOW_INTERVAL_LOW_ABBREV`         | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+|  5    | `ONIG_SYN_STRICT_CHECK_BACKREF`              | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+|  6    | `ONIG_SYN_DIFFERENT_LEN_ALT_LOOK_BEHIND`     | Yes   | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+|  7    | `ONIG_SYN_CAPTURE_ONLY_NAMED_GROUP`          | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+|  8    | `ONIG_SYN_ALLOW_MULTIPLEX_DEFINITION_NAME`   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+|  9    | `ONIG_SYN_FIXED_INTERVAL_IS_GREEDY_ONLY`     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 20    | `ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC`        | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     | -     |
+| 21    | `ONIG_SYN_BACKSLASH_ESCAPE_IN_CC`            | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     |
+| 22    | `ONIG_SYN_ALLOW_EMPTY_RANGE_IN_CC`           | -     | -     | -     | -     | -     | -     | Yes   | Yes   | -     | -     | -     |
+| 23    | `ONIG_SYN_ALLOW_DOUBLE_RANGE_OP_IN_CC`       | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
+| 24    | `ONIG_SYN_WARN_CC_OP_NOT_ESCAPED`            | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 25    | `ONIG_SYN_WARN_REDUNDANT_NESTED_REPEAT`      | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 31    | `ONIG_SYN_CONTEXT_INDEP_ANCHORS`             | Yes   | Yes   | Yes   | Yes   | Yes   | Yes   | -     | -     | Yes   | -     | -     |
 
 ### Syntax option values
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x87a003db` |
+| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x77eb7bd2` | `0x83a003db` |
 | `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x06eb7bda` | `0x83a003db` |
 | `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe303b7` | `0x80a0018b` |
 | `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30037` | `0x80a0000b` |
