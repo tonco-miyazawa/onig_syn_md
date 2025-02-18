@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.5.0 (2025/02/18)_
+_Documented for Oniguruma 6.4.0 (2025/02/18)_
 
 
 ----------
@@ -656,79 +656,6 @@ as a literal `\`.
 You usually do not want this flag to be enabled.
 
 
-### 21. ONIG_SYN_OP2_QMARK_LPAREN_IF_ELSE (enable `(?(...)then|else)`)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-Enables support for conditional inclusion of subsequent regex patterns based on whether
-a prior named or numbered capture matched, or based on whether a pattern will
-match.  This supports many different forms, including:
-
-  - `(?(<foo>)then|else)` - condition based on a capture by name.
-  - `(?('foo')then|else)` - condition based on a capture by name.
-  - `(?(3)then|else)` - condition based on a capture by number.
-  - `(?(+3)then|else)` - forward conditional to a future match, by relative position.
-  - `(?(-3)then|else)` - backward conditional to a prior match, by relative position.
-  - `(?(foo)then|else)` - this matches a pattern `foo`. (foo is any sub-expression)
-
-(New feature as of Oniguruma 6.5.)
-
-
-### 22. ONIG_SYN_OP2_ESC_CAPITAL_K_KEEP (enable `\K`)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-Enables support for `\K`, which excludes all content before it from the overall
-regex match (i.e., capture #0).  So, for example, pattern `foo\Kbar` would match
-`foobar`, but capture #0 would only include `bar`.
-
-(New feature as of Oniguruma 6.5.)
-
-
-### 23. ONIG_SYN_OP2_ESC_CAPITAL_R_GENERAL_NEWLINE (enable `\R`)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-Enables support for `\R`, the "general newline" shorthand, which matches
-`(\r\n|[\n\v\f\r\u0085\u2028\u2029])` (obviously, the Unicode values are cannot be
-matched in ASCII encodings).
-
-(New feature as of Oniguruma 6.5.)
-
-
-### 24. ONIG_SYN_OP2_ESC_CAPITAL_N_O_SUPER_DOT (enable `\N` and `\O`)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-Enables support for `\N` and `\O`.  `\N` is "not a line break," which is much
-like the standard `.` metacharacter, except that while `.` can be affected by
-the single-line setting, `\N` always matches exactly one character that is not
-one of the various line-break characters (like `\n` and `\r`).
-
-`\O` matches exactly one character, regardless of whether single-line or
-multi-line mode are enabled or disabled.
-
-(New feature as of Oniguruma 6.5.)
-
-
-### 25. ONIG_SYN_OP2_QMARK_TILDE_ABSENT_GROUP (enable `(?~...)`)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-Enables support for the `(?~r)` "absent operator" syntax, which matches
-as much as possible as long as the result _doesn't_ match pattern `r`.  This is
-_not_ the same as negative lookahead or negative lookbehind.
-
-Among the most useful examples of this is `\/\*(?~\*\/)\*\/`, which matches
-C-style comments by simply saying "starts with /*, ends with */, and _doesn't_
-contain a */ in between."
-
-A full explanation of this feature is complicated, but it is useful, and an
-excellent article about it is [available on Medium](https://medium.com/rubyinside/the-new-absent-operator-in-ruby-s-regular-expressions-7c3ef6cd0b99).
-
-(New feature as of Oniguruma 6.5.)
-
-
 ----------
 
 
@@ -931,33 +858,28 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 ### Group Two Flags (op2)
 
-| ID    | Option                                         | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
-| ----- | ---------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-|  0    | `ONIG_SYN_OP2_ESC_CAPITAL_Q_QUOTE`             | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-|  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`              | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-|  2    | `ONIG_SYN_OP2_OPTION_PERL`                     | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-|  3    | `ONIG_SYN_OP2_OPTION_RUBY`                     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-|  4    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_REPEAT`          | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-|  5    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_INTERVAL`        | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-|  6    | `ONIG_SYN_OP2_CCLASS_SET_OP`                   | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-|  7    | `ONIG_SYN_OP2_QMARK_LT_NAMED_GROUP`            | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-|  8    | `ONIG_SYN_OP2_ESC_K_NAMED_BACKREF`             | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-|  9    | `ONIG_SYN_OP2_ESC_G_SUBEXP_CALL`               | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-| 10    | `ONIG_SYN_OP2_ATMARK_CAPTURE_HISTORY`          | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 11    | `ONIG_SYN_OP2_ESC_CAPITAL_C_BAR_CONTROL`       | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 12    | `ONIG_SYN_OP2_ESC_CAPITAL_M_BAR_META`          | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 13    | `ONIG_SYN_OP2_ESC_V_VTAB`                      | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-| 14    | `ONIG_SYN_OP2_ESC_U_HEX4`                      | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
-| 15    | `ONIG_SYN_OP2_ESC_GNU_BUF_ANCHOR`              | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     |
-| 16    | `ONIG_SYN_OP2_ESC_P_BRACE_CHAR_PROPERTY`       | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
-| 17    | `ONIG_SYN_OP2_ESC_P_BRACE_CIRCUMFLEX_NOT`      | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 19    | `ONIG_SYN_OP2_ESC_H_XDIGIT`                    | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
-| 20    | `ONIG_SYN_OP2_INEFFECTIVE_ESCAPE`              | -     | -     | -     | -     | -     | -     | -     | -     | -     | Yes   |
-| 21    | `ONIG_SYN_OP2_QMARK_LPAREN_IF_ELSE`            | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 22    | `ONIG_SYN_OP2_ESC_CAPITAL_K_KEEP`              | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 23    | `ONIG_SYN_OP2_ESC_CAPITAL_R_GENERAL_NEWLINE`   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 24    | `ONIG_SYN_OP2_ESC_CAPITAL_N_O_SUPER_DOT`       | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 25    | `ONIG_SYN_OP2_QMARK_TILDE_ABSENT_GROUP`        | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
+| ID    | Option                                      | Ruby  | PeNG  | Perl  | Java  | Gnu   | Grep  | Emacs | PosEx | PosB  | Asis  |
+| ----- | ------------------------------------------- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+|  0    | `ONIG_SYN_OP2_ESC_CAPITAL_Q_QUOTE`          | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
+|  1    | `ONIG_SYN_OP2_QMARK_GROUP_EFFECT`           | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
+|  2    | `ONIG_SYN_OP2_OPTION_PERL`                  | -     | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
+|  3    | `ONIG_SYN_OP2_OPTION_RUBY`                  | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+|  4    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_REPEAT`       | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+|  5    | `ONIG_SYN_OP2_PLUS_POSSESSIVE_INTERVAL`     | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+|  6    | `ONIG_SYN_OP2_CCLASS_SET_OP`                | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+|  7    | `ONIG_SYN_OP2_QMARK_LT_NAMED_GROUP`         | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+|  8    | `ONIG_SYN_OP2_ESC_K_NAMED_BACKREF`          | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+|  9    | `ONIG_SYN_OP2_ESC_G_SUBEXP_CALL`            | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
+| 10    | `ONIG_SYN_OP2_ATMARK_CAPTURE_HISTORY`       | -     | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 11    | `ONIG_SYN_OP2_ESC_CAPITAL_C_BAR_CONTROL`    | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 12    | `ONIG_SYN_OP2_ESC_CAPITAL_M_BAR_META`       | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 13    | `ONIG_SYN_OP2_ESC_V_VTAB`                   | Yes   | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+| 14    | `ONIG_SYN_OP2_ESC_U_HEX4`                   | -     | -     | -     | Yes   | -     | -     | -     | -     | -     | -     |
+| 15    | `ONIG_SYN_OP2_ESC_GNU_BUF_ANCHOR`           | -     | -     | -     | -     | -     | -     | Yes   | -     | -     | -     |
+| 16    | `ONIG_SYN_OP2_ESC_P_BRACE_CHAR_PROPERTY`    | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
+| 17    | `ONIG_SYN_OP2_ESC_P_BRACE_CIRCUMFLEX_NOT`   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
+| 19    | `ONIG_SYN_OP2_ESC_H_XDIGIT`                 | Yes   | -     | -     | -     | -     | -     | -     | -     | -     | -     |
+| 20    | `ONIG_SYN_OP2_INEFFECTIVE_ESCAPE`           | -     | -     | -     | -     | -     | -     | -     | -     | -     | Yes   |
 
 ### Syntax Flags (behavior)
 
@@ -985,9 +907,9 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x03eb3bda` | `0x83a003db` |
-| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x03e30387` | `0x80a0018b` |
-| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x03e30007` | `0x80a0000b` |
+| `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x000b3bda` | `0x83a003db` |
+| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x00030387` | `0x80a0018b` |
+| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x00030007` | `0x80a0000b` |
 | `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a0004b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
 | `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
