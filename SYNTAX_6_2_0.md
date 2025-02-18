@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.3.0 (2025/02/18)_
+_Documented for Oniguruma 6.2.0 (2025/02/18)_
 
 
 ----------
@@ -411,17 +411,6 @@ _Set in: Ruby, Perl_NG, Perl_
 
 Enables support for brace-wrapped hexadecimal-style escapes of up to eight digits,
 like `\x{1}` for code point 1, and `\x{FFFE}` for code point 65534.
-
-
-### 31. ONIG_SYN_OP_ESC_O_BRACE_OCTAL (enable `\o{1OOOOOOOOOO}` octal codes)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-Enables support for brace-wrapped octal-style escapes of up to eleven digits,
-like `\o{1}` for code point 1, and `\o{177776}` for code point 65534.
-
-(New feature as of Oniguruma 6.3.)
-
 
 ----------
 
@@ -854,7 +843,6 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 28    | `ONIG_SYN_OP_ESC_OCTAL3`                   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 | 29    | `ONIG_SYN_OP_ESC_X_HEX2`                   | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     |
 | 30    | `ONIG_SYN_OP_ESC_X_BRACE_HEX8`             | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 31    | `ONIG_SYN_OP_ESC_O_BRACE_OCTAL`            | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 
 ### Group Two Flags (op2)
 
@@ -907,9 +895,9 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x000b3bda` | `0x83a003db` |
-| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x00030387` | `0x80a0018b` |
-| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x00030007` | `0x80a0000b` |
+| `ONIG_SYNTAX_RUBY`           | `0x7ff7d556` | `0x000b3bda` | `0x83a003db` |
+| `ONIG_SYNTAX_PERL_NG`        | `0x7ff7d556` | `0x00030387` | `0x80a0018b` |
+| `ONIG_SYNTAX_PERL`           | `0x7ff7d556` | `0x00030007` | `0x80a0000b` |
 | `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a0004b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
 | `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
