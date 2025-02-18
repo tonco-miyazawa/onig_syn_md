@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.8.0 (2025/02/17)_
+_Documented for Oniguruma 6.7.1 (2025/02/18)_
 
 
 ----------
@@ -762,37 +762,6 @@ backreferences.
 (New feature as of Oniguruma 6.7.)
 
 
-### 28. ONIG_SYN_OP2_QMARK_BRACE_CALLOUT_CONTENTS (enable `(?{...})`)
-
-_Set in: Oniguruma, Perl_NG, Perl_
-
-Enables support for Perl-style "callouts" — pattern substitutions that result from
-invoking a callback method.  When `(?{foo})` is reached in a pattern, the callback
-function set in `onig_set_progress_callout()` will be invoked, and be able to perform
-custom computation during the pattern match (and during backtracking).
-
-Full documentation for this advanced feature can be found in the Oniguruma
-`/doc/` folder, with an example in `sample/callout.c`.
-
-(New feature as of Oniguruma 6.8.)
-
-
-### 29. ONIG_SYN_OP2_ASTERISK_CALLOUT_NAME (enable `(*name)`)
-
-_Set in: Oniguruma, Perl_NG, Perl_
-
-Enables support for Perl-style "callouts" — pattern substitutions that result from
-invoking a callback method.  When `(*foo)` is reached in a pattern, the callback
-function set in `onig_set_callout_of_name()` will be invoked, passing the given name
-`foo` to it, and it can perform custom computation during the pattern match (and
-during backtracking).
-
-Full documentation for this advanced feature can be found in the Oniguruma
-`/doc/` folder, with an example in `sample/callout.c`.
-
-(New feature as of Oniguruma 6.8.)
-
-
 ----------
 
 
@@ -1024,8 +993,6 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 25    | `ONIG_SYN_OP2_QMARK_TILDE_ABSENT_GROUP`        | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 26    | `ONIG_SYN_OP2_ESC_X_Y_GRAPHEME_CLUSTER`        | Yes   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 27    | `ONIG_SYN_OP2_QMARK_PERL_SUBEXP_CALL`          | -     | -     | Yes   | -     | -     | -     | -     | -     | -     | -     | -     |
-| 28    | `ONIG_SYN_OP2_QMARK_BRACE_CALLOUT_CONTENTS`    | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 29    | `ONIG_SYN_OP2_ASTERISK_CALLOUT_NAME`           | Yes   | -     | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 
 ### Syntax Flags (behavior)
 
@@ -1053,10 +1020,10 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x37eb7bda` | `0x83a003db` |
+| `ONIG_SYNTAX_ONIGURUMA`      | `0xfff7d556` | `0x07eb7bda` | `0x83a003db` |
 | `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x06eb7bda` | `0x83a003db` |
-| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x3fe30387` | `0x80a0018b` |
-| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x37e30007` | `0x80a0000b` |
+| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x0fe30387` | `0x80a0018b` |
+| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x07e30007` | `0x80a0000b` |
 | `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a0004b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
 | `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
