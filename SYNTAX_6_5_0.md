@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.6.0 (2025/02/18)_
+_Documented for Oniguruma 6.5.0 (2025/02/18)_
 
 
 ----------
@@ -729,27 +729,6 @@ excellent article about it is [available on Medium](https://medium.com/rubyinsid
 (New feature as of Oniguruma 6.5.)
 
 
-### 26. ONIG_SYN_OP2_ESC_X_Y_GRAPHEME_CLUSTER (enable `\X` and `\Y` and `\y`)
-
-_Set in: Ruby, Perl_NG, Perl_
-
-`\X` is another variation on `.`, designed to support Unicode, in that it matches
-a full _grapheme cluster_.  In Unicode, `à` can be encoded as one code point,
-`U+00E0`, or as two, `U+0061 U+0300`.  If those are further escaped using UTF-8,
-the former becomes two bytes, and the latter becomes three.  Unfortunately, `.`
-would naively match only one or two bytes, depending on the encoding, and would
-likely incorrectly match anything from just `a` to a broken half of a code point.
-`\X` is designed to fix this:  It matches the full `à`, no matter how `à` is
-encoded or decomposed.
-
-`\y` matches a cluster boundary, i.e., a zero-width position between
-graphemes, somewhat like `\b` matches boundaries between words.  `\Y` matches
-the _opposite_ of `\y`, that is, a zero-width position between code points in
-the _middle_ of a grapheme.
-
-(New feature as of Oniguruma 6.6.)
-
-
 ----------
 
 
@@ -979,7 +958,6 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 | 23    | `ONIG_SYN_OP2_ESC_CAPITAL_R_GENERAL_NEWLINE`   | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 24    | `ONIG_SYN_OP2_ESC_CAPITAL_N_O_SUPER_DOT`       | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 | 25    | `ONIG_SYN_OP2_QMARK_TILDE_ABSENT_GROUP`        | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
-| 26    | `ONIG_SYN_OP2_ESC_X_Y_GRAPHEME_CLUSTER`        | Yes   | Yes   | Yes   | -     | -     | -     | -     | -     | -     | -     |
 
 ### Syntax Flags (behavior)
 
@@ -1007,9 +985,9 @@ These tables show which of the built-in syntaxes use which flags and options, fo
 
 |           Syntax             |     (op)     |    (op2)     |  (behavior)  |
 | ---------------------------- | ------------ | ------------ | ------------ |
-| `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x07eb3bda` | `0x83a003db` |
-| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x07e30387` | `0x80a0018b` |
-| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x07e30007` | `0x80a0000b` |
+| `ONIG_SYNTAX_RUBY`           | `0xfff7d556` | `0x03eb3bda` | `0x83a003db` |
+| `ONIG_SYNTAX_PERL_NG`        | `0xfff7d556` | `0x03e30387` | `0x80a0018b` |
+| `ONIG_SYNTAX_PERL`           | `0xfff7d556` | `0x03e30007` | `0x80a0000b` |
 | `ONIG_SYNTAX_JAVA`           | `0x3ff7d556` | `0x00016077` | `0x80a0004b` |
 | `ONIG_SYNTAX_GNU_REGEX`      | `0x01ffd556` | `0x00000000` | `0x80a0000b` |
 | `ONIG_SYNTAX_GREP`           | `0x019f2aa6` | `0x00000000` | `0x00500000` |
