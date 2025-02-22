@@ -1,11 +1,11 @@
 # onig_syn_md.c
 
-This is a program to print the data used in `oniguruma/doc/SYNTAX.md` .
+This is a program to print the data used in [oniguruma/doc/SYNTAX.md](https://github.com/kkos/oniguruma/blob/master/doc/SYNTAX.md) .
 This will read option values ​​from Oniguruma installed on your system.
 Please see the following link for instructions on how to use it: [Oniguruma #315 - Print the table in 'SYNTAX.md'](https://github.com/kkos/oniguruma/issues/315#issue-2719589814)
 
-## Oniguruma (Owner: K.Kosako) [https://github.com/kkos/oniguruma](https://github.com/kkos/oniguruma)
-## SYNTAX.md (Author: seanofw) [https://github.com/seanofw](https://github.com/seanofw)
+**Oniguruma (Owner: K.Kosako) [https://github.com/kkos/oniguruma](https://github.com/kkos/oniguruma)**\
+**SYNTAX.md (Author: seanofw) [https://github.com/seanofw](https://github.com/seanofw)**
 
 ### version 0005
 - Changed the Style of 'Syntax option values' table.
