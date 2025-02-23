@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.5 revised 1 (2025/02/16)_
+_Documented for Oniguruma 6.9.5 revised 1 (2025/02/23)_
 
 
 ----------
@@ -918,11 +918,15 @@ _Set in: Perl_NG, Perl, Java_
 If this flag is set, then an isolated option doesn't break the branch and affects until the end of the group (or end of the pattern).
 If this flag is not set, then an isolated option is interpreted as the starting point of a new branch. `/a(?i)b|c/` ==> `/a(?i:b|c)/`
 
+(New feature as of Oniguruma 6.9.5)
+
 ### 11. ONIG_SYN_VARIABLE_LEN_LOOK_BEHIND (`(?<=...a+...)`)
 
 _Set in: Oniguruma, Java_
 
 If this flag is set, then a variable length expressions are allowed in look-behind.
+
+(New feature as of Oniguruma 6.9.5)
 
 ### 20. ONIG_SYN_NOT_NEWLINE_IN_NEGATIVE_CC (add `\n` to `[^...]`)
 
@@ -979,6 +983,8 @@ If this flag is clear, Oniguruma will allow the nested repeat operators without 
 _Set in: Oniguruma_
 
 If this flag is set, then invalid code points at the end of range in character class are allowed.
+
+(New feature as of Oniguruma 6.9.3)
 
 ### 31. ONIG_SYN_CONTEXT_INDEP_ANCHORS
 
