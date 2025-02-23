@@ -1,7 +1,7 @@
 
 # Oniguruma syntax (operator) configuration
 
-_Documented for Oniguruma 6.9.4 (2025/02/16)_
+_Documented for Oniguruma 6.9.4 (2025/02/23)_
 
 
 ----------
@@ -966,6 +966,8 @@ If this flag is clear, Oniguruma will allow the nested repeat operators without 
 _Set in: Oniguruma_
 
 If this flag is set, then invalid code points at the end of range in character class are allowed.
+
+(New feature as of Oniguruma 6.9.3)
 
 ### 31. ONIG_SYN_CONTEXT_INDEP_ANCHORS
 
